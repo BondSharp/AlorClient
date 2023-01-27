@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -9,9 +8,8 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
-namespace ApiWrapper.App
+namespace ApiWrapper
 {
     public class TokenAuthorization
     {
@@ -20,13 +18,13 @@ namespace ApiWrapper.App
         private readonly string refreshToken;
         private readonly HttpClient client;
 
-        public TokenAuthorization(bool isProduction, string refreshToken)
+        public TokenAuthorization(Settings settings)
         {
             client = new HttpClient()
             {
-                BaseAddress = new Uri(isProduction ? ProductionAddress : DevelopmentAddress ),
+                BaseAddress = new Uri(settings.IsProduction ? ProductionAddress : DevelopmentAddress),
             };
-            this.refreshToken = refreshToken;
+            refreshToken = settings.RefreshToken;
         }
 
         public Task<string> Token()
@@ -36,8 +34,7 @@ namespace ApiWrapper.App
 
         private async Task<string> GetAssetTokenAsync()
         {
-            var response = await client.PostAsync($"/refresh?token={refreshToken}",null);
-
+            var response = await client.PostAsync($"/refresh?token={refreshToken}", null);
             var token = await response.Content.ReadFromJsonAsync<Token>();
 
             return token.AccessToken;

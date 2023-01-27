@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApiWrapper.App
+namespace ApiWrapper
 {
-    public class Token
+    public sealed  class Share
     {
-        public string AccessToken { get; set; }
     }
 }

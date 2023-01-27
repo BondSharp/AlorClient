@@ -1,5 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using ApiWrapper.App;
+using ApiWrapper;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +14,6 @@ var provider = new ServiceCollection()
 
 
 
-var result = provider.GetRequiredService<TokenAuthorization>().Token().Result;
+var result = provider.GetRequiredService<Securities>().Get();
 Console.WriteLine(result);
 Console.ReadLine();

@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace ApiWrapper.App
+namespace ApiWrapper
 {
     public static class Extentoions
     {
         const string ConfigurationKey = "ApiWrapper";
-     
+
         public static IServiceCollection AddApiWrapper(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
-            var settings = configuration.GetRequiredSection(ConfigurationKey).Get<Settings>();
+            var settings = configuration.GetRequiredSection(ConfigurationKey).Get<Settings>()
+                ?? throw new Exception($"Not found configuration wthi key '{ConfigurationKey}'");
             return serviceCollection
-                .AddSingleton<TokenAuthorization>((provider) =>
-                {
-                    return new TokenAuthorization(settings.IsProduction, settings.RefreshToken);
-                });
+                    .AddSingleton(settings)
+                    .AddSingleton<AlorApi>()
+                    .AddSingleton<Securities>()
+                    .AddSingleton<TokenAuthorization>();
         }
     }
 }

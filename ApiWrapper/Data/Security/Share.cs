@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public sealed class Option
+    public sealed class Share : Security
     {
     }
 }

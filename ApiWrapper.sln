@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiWrapper.App", "ApiWrapper.App\ApiWrapper.App.csproj", "{723A9A17-6F7D-436F-ABFF-947066F5EA81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiWrapper", "ApiWrapper\ApiWrapper.csproj", "{04258FD5-0C19-427B-A321-1E1F04ED4508}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiWrapper", "ApiWrapper\ApiWrapper.csproj", "{04258FD5-0C19-427B-A321-1E1F04ED4508}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

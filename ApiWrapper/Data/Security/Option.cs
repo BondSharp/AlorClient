@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public class Security
+    public class Option : Derivative
     {
+
     }
 }

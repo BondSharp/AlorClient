@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public sealed class Etf : Security
+    internal class Token
     {
-
+        public required string AccessToken { get; set; }
     }
 }

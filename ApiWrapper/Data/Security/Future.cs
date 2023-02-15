@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public sealed  class Share
+    public class Future
     {
+
     }
 }

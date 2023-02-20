@@ -2,8 +2,8 @@
 {
     public interface SecuritieIntarface
     {
-        Share[] Shares(string? query = null);
-        Future[] Futures(string? query = null);
-        Option[] Options(string? query = null);
+        IAsyncEnumerable<Share> Shares(string? query = null);
+        IAsyncEnumerable<Future> Futures(string? query = null);
+        IAsyncEnumerable<Option> Options(string? query = null);
     }
 }

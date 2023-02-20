@@ -1,7 +1,6 @@
 ﻿using ApiWrapper.Data;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +27,7 @@ namespace ApiWrapper.App
 
             subscriber.Notifications.Subscribe(OnNotification);
 
-            var sberbankShare = GetSberbankShare();
+            var sberbankShare = await GetSberbankShare();
 
             var orderBookSubscribe = new OrderBookSubscription(sberbankShare, 10);
             subscriber.Subscribe(orderBookSubscribe);
@@ -45,10 +44,10 @@ namespace ApiWrapper.App
             Console.WriteLine(notification);
         }
 
-        public Share GetSberbankShare()
+        public async Task<Share> GetSberbankShare()
         {
             var shares = securities.Shares("Sber");
-            return shares.First();
+            return await shares.FirstAsync();
         }
 
 

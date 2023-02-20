@@ -13,7 +13,7 @@
             this.alorApi = alorApi;
         }
 
-        public Share[] Shares(string? query = null)
+        public IAsyncEnumerable<Share> Shares(string? query = null)
         {
             var shares = Request<Share>(new SecuritiesRequest()
             {
@@ -21,9 +21,7 @@
                 Query = query
             });
 
-            return shares
-                .Where(Filter)
-                .ToArray();
+            return shares.Where(Filter);               ;
         }
 
         private bool Filter(Share share)
@@ -31,7 +29,7 @@
             return share.Board == "TQBR" && (share.CfiCode.StartsWith("ES") || share.CfiCode.StartsWith("EP"));
         }
 
-        public Future[] Futures(string? query = null)
+        public IAsyncEnumerable<Future>  Futures(string? query = null)
         {
             var futures = Request<Future>(new SecuritiesRequest()
             {
@@ -39,28 +37,26 @@
                 Query = query
             });
 
-            return futures
-
-                .ToArray();
+            return futures;
         }
 
-        public Option[] Options(string? query = null)
+        public IAsyncEnumerable<Option> Options(string? query = null)
         {
-            var futures = Request<Option>(new SecuritiesRequest()
+            var options =  Request<Option>(new SecuritiesRequest()
             {
                 Cficode = "O",
                 Query = query
             });
 
-            return futures.ToArray();
+            return options;
         }
 
 
-        private IEnumerable<T> Request<T>(SecuritiesRequest @params)
+        private async IAsyncEnumerable<T> Request<T>(SecuritiesRequest @params)
         {
             while (true)
             {
-                var securities = alorApi.Get<T[]>(path, @params).Result;
+                var securities = await alorApi.Get<T[]>(path, @params);
                 foreach (var security in securities)
                 {
                     yield return security;

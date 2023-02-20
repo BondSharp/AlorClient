@@ -24,7 +24,7 @@ namespace ApiWrapper
             isProduction = settings.IsProduction;
         }
 
-        public async Task<T> Get<T>(string path, object @params)
+        public async Task<T> Get<T>(string path, object @params) where T : class
         {
             using var client = CreateClient();
             var query = GetQueryString(@params);

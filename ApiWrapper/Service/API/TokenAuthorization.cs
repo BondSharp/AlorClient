@@ -22,7 +22,7 @@ namespace ApiWrapper
             return token.Result;
         }
 
-        public async void UpdateToken()
+        public async Task UpdateToken()
         {
             var task = GetAssetTokenAsync();
             await task;
@@ -37,7 +37,7 @@ namespace ApiWrapper
             {
                 var response = await client.PostAsync($"/refresh?token={refreshToken}", null);
                 var token = await response.Content.ReadFromJsonAsync<Token>();
-                if(token == null)
+                if (token == null)
                 {
                     throw new NullReferenceException(nameof(token));
                 };

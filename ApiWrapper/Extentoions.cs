@@ -28,7 +28,8 @@ namespace ApiWrapper
                     .AddScoped<NotificationProvider>()
                     .AddScoped<SubscriptionCollection>()
                     .AddScoped<WebsocketReconnect>()
-                    .AddScoped<SubscriberIntarface, Subscriber>();
+                    .AddScoped<SubscriberIntarface, Subscriber>()
+                    .AddHostedService<UpdatingToken>();
         }
 
         private static IWebsocketClient GetWebsocketClient(IServiceProvider serviceProvider) => serviceProvider.GetRequiredService<WebsocketClientFactory>().Factory();

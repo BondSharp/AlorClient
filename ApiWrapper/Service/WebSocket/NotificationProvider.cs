@@ -36,7 +36,7 @@ namespace ApiWrapper.Service.WebSocket
             {
                 var guid = jsonDocument.RootElement.GetProperty("requestGuid").GetGuid();
                 var code = jsonDocument.RootElement.GetProperty("httpCode").GetInt32();
-                var message = jsonDocument.RootElement.GetProperty("message").GetString();
+                var message = jsonDocument.RootElement.GetProperty("message").GetString() ?? throw new NullReferenceException();
                 var subscription = subscriptionCollection.GetSubscription(guid);
 
                 return new Notification(code, message, subscription);

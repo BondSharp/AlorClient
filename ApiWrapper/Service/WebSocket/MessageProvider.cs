@@ -2,6 +2,7 @@
 using System.Reactive.Linq;
 using System.Text.Json;
 using Websocket.Client;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ApiWrapper
 {
@@ -43,17 +44,27 @@ namespace ApiWrapper
         {
             if (subscription is OrderBookSubscription bookSubscription)
             {
-                var orderBook = data.Deserialize<OrderBook>();
+                var orderBook = Deserialize<OrderBook>(data);
                 return new OrderBookMessage(bookSubscription, orderBook);
             }
 
             if (subscription is AllDealsSubscription allDealsSubscription)
             {
-                var deal = data.Deserialize<Deal>(new JsonSerializerOptions() { });
+                var deal = Deserialize<Deal>(data);
                 return new DealMessage(allDealsSubscription, deal);
             }
 
             throw new ArgumentException(nameof(subscription));
+        }
+
+        private T Deserialize<T>(JsonElement jsonElement)
+        {
+            var result = jsonElement.Deserialize<T>();
+            if (result == null)
+            {
+                throw new ArgumentException(nameof(result));
+            }
+            return result;
         }
 
 

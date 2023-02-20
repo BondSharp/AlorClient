@@ -9,7 +9,7 @@ namespace ApiWrapper
 
         private readonly string refreshToken;
         private readonly bool isProduction;
-        private Task<string> token;
+        private Task<Token> token;
         public TokenAuthorization(Settings settings)
         {
             isProduction = settings.IsProduction;
@@ -17,12 +17,19 @@ namespace ApiWrapper
             token = GetAssetTokenAsync();
         }
 
-        public Task<string> Token()
+        public Token Token()
         {
-            return token;
+            return token.Result;
         }
 
-        private async Task<string> GetAssetTokenAsync()
+        public async void UpdateToken()
+        {
+            var task = GetAssetTokenAsync();
+            await task;
+            token = task;
+        }
+
+        private async Task<Token> GetAssetTokenAsync()
         {
             var baseAddress = new Uri(isProduction ? ProductionAddress : DevelopmentAddress);
 
@@ -30,11 +37,11 @@ namespace ApiWrapper
             {
                 var response = await client.PostAsync($"/refresh?token={refreshToken}", null);
                 var token = await response.Content.ReadFromJsonAsync<Token>();
-                if (token == null)
+                if(token == null)
                 {
                     throw new NullReferenceException(nameof(token));
-                }
-                return token.AccessToken;
+                };
+                return token;
             }
         }
     }

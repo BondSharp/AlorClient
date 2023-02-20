@@ -26,7 +26,7 @@ namespace ApiWrapper
 
         public async Task<T> Get<T>(string path, object @params)
         {
-            using var client = await CreateClient();
+            using var client = CreateClient();
             var query = GetQueryString(@params);
             var uriBuilder = new UriBuilder(isProduction ? ProductionAddress : DevelopmentAddress)
             {
@@ -42,11 +42,11 @@ namespace ApiWrapper
             return resut;
         }
 
-        private async Task<HttpClient> CreateClient()
+        private HttpClient CreateClient()
         {
             var client = new HttpClient();
-            var token = await tokenAuthorization.Token();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var token = tokenAuthorization.Token();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
             return client;
         }
 

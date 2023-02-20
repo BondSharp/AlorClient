@@ -1,6 +1,8 @@
-﻿namespace ApiWrapper
+﻿using Microsoft.AspNetCore.Http.Extensions;
+
+namespace ApiWrapper
 {
-    internal class Securities : SecuritieIntarface
+    internal class Securities : SecuritiesIntarface
     {
         private const string path = "/md/v2/Securities";
         private readonly AlorApi alorApi;
@@ -13,61 +15,71 @@
             this.alorApi = alorApi;
         }
 
-        public IAsyncEnumerable<Share> Shares(string? query = null)
+        public async IAsyncEnumerable<T> Get<T>(string? query = null) where T : Security
         {
-            var shares = Request<Share>(new SecuritiesRequest()
-            {
-                Cficode = "E",
-                Query = query
-            });
 
-            return shares.Where(Filter);               ;
+            var cficode = GetCficode<T>();
+            await foreach (var security in Request<T>(cficode, query))
+            {
+                if (security is Share share && share.Board == "TQBR" && (share.CfiCode.StartsWith("ES") || share.CfiCode.StartsWith("EP")))
+                {
+                    yield return security;
+                }
+
+                if (security is Option)
+                {
+                    yield return security;
+                }
+
+                if (security is Future)
+                {
+                    yield return security;
+                }
+
+            };
         }
 
-        private bool Filter(Share share)
+        private string GetCficode<T>()
         {
-            return share.Board == "TQBR" && (share.CfiCode.StartsWith("ES") || share.CfiCode.StartsWith("EP"));
+            switch (typeof(T).Name)
+            {
+                case nameof(Share):
+                    return "E";
+                case nameof(Future):
+                    return "F";
+                case nameof(Option):
+                    return "O";
+                default:
+                    throw new ArgumentException(nameof(T));
+            }
         }
 
-        public IAsyncEnumerable<Future>  Futures(string? query = null)
+        private async IAsyncEnumerable<T> Request<T>(string Cficode, string? query)
         {
-            var futures = Request<Future>(new SecuritiesRequest()
+            var limit = 20;
+            var offset = 0;
+            var @params = new Dictionary<string, string>
             {
-                Cficode = "F",
-                Query = query
-            });
-
-            return futures;
-        }
-
-        public IAsyncEnumerable<Option> Options(string? query = null)
-        {
-            var options =  Request<Option>(new SecuritiesRequest()
+                { "cficode", Cficode },
+                { "limit", limit.ToString() },
+                { "exchange", "MOEX" }
+            };
+            if (query != null)
             {
-                Cficode = "O",
-                Query = query
-            });
-
-            return options;
-        }
-
-
-        private async IAsyncEnumerable<T> Request<T>(SecuritiesRequest @params)
-        {
-            while (true)
+                @params.Add("query", query);
+            }
+            do
             {
-                var securities = await alorApi.Get<T[]>(path, @params);
+                @params["offset"] = offset.ToString();
+                var securities = await alorApi.Get<T[]>(path, new QueryBuilder(@params));
                 foreach (var security in securities)
                 {
                     yield return security;
                 }
-                @params.Offset += securities.Length;
-                if (securities.Length < @params.Limit)
-                {
-                    break;
-                }
-            }
+                offset += securities.Length;
+            } while (offset < limit);
         }
+
 
     }
 }

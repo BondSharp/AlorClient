@@ -24,14 +24,14 @@ namespace ApiWrapper
             isProduction = settings.IsProduction;
         }
 
-        public async Task<T> Get<T>(string path, object @params) where T : class
+        public async Task<T> Get<T>(string path, QueryBuilder queryBuilder) where T : class
         {
             using var client = CreateClient();
-            var query = GetQueryString(@params);
+       
             var uriBuilder = new UriBuilder(isProduction ? ProductionAddress : DevelopmentAddress)
             {
                 Path = path,
-                Query = query
+                Query = queryBuilder.ToString()
             };
 
             var resut = await client.GetFromJsonAsync<T>(uriBuilder.Uri);
@@ -50,25 +50,7 @@ namespace ApiWrapper
             return client;
         }
 
-        private static string GetQueryString(object @params)
-        {
-            var properties = @params
-                .GetType()
-            .GetProperties()
-                .Select(param => new { name = param.Name, value = UrlEncode(param.GetValue(@params, null)) })
-                .Where(param => param.value != null)
-                .Select(param => $"{param.name}={param.value}")
-                .ToArray();
-            return string.Join("&", properties.ToArray());
-        }
+     
 
-        private static string? UrlEncode(object? value)
-        {
-            if (value == null)
-            {
-                return null;
-            }
-            return HttpUtility.UrlEncode(value.ToString());
-        }
     }
 }

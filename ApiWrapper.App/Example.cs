@@ -11,10 +11,10 @@ namespace ApiWrapper.App
 {
     internal class Example : BackgroundService
     {
-        private readonly SecuritieIntarface securities;
+        private readonly SecuritiesIntarface securities;
         private readonly SubscriberIntarface subscriber;
 
-        public Example(SecuritieIntarface securities, SubscriberIntarface subscriber)
+        public Example(SecuritiesIntarface securities, SubscriberIntarface subscriber)
         {
             this.securities = securities;
             this.subscriber = subscriber;
@@ -27,7 +27,7 @@ namespace ApiWrapper.App
 
             subscriber.Notifications.Subscribe(OnNotification);
 
-            var sberbankShare = await GetSberbankShare();
+            var sberbankShare = await securities.Get<Share>("SBER").FirstAsync();
 
             var orderBookSubscribe = new OrderBookSubscription(sberbankShare, 10);
             subscriber.Subscribe(orderBookSubscribe);
@@ -44,11 +44,7 @@ namespace ApiWrapper.App
             Console.WriteLine(notification);
         }
 
-        public async Task<Share> GetSberbankShare()
-        {
-            var shares = securities.Shares("Sber");
-            return await shares.FirstAsync();
-        }
+
 
 
 

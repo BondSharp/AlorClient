@@ -1,8 +1,6 @@
-﻿using ApiWrapper.Data;
-using System.Reactive.Linq;
+﻿using System.Reactive.Linq;
 using System.Text.Json;
 using Websocket.Client;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ApiWrapper
 {
@@ -48,7 +46,7 @@ namespace ApiWrapper
                 return new OrderBookMessage(bookSubscription, orderBook);
             }
 
-            if (subscription is AllDealsSubscription allDealsSubscription)
+            if (subscription is DealsSubscription allDealsSubscription)
             {
                 var deal = Deserialize<Deal>(data);
                 return new DealMessage(allDealsSubscription, deal);

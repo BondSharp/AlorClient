@@ -1,5 +1,4 @@
-﻿using ApiWrapper.Data;
-using ApiWrapper.Service.WebSocket;
+﻿using ApiWrapper.Service.WebSocket;
 using System.Reactive.Linq;
 using System.Text.Json;
 using Websocket.Client;
@@ -7,7 +6,7 @@ using Websocket.Client.Models;
 
 namespace ApiWrapper
 {
-    internal class Subscriber : SubscriberIntarface
+    internal class Subscriber : ISubscriber
     {
         private readonly SubscriptionSender subscriptionSender;
         private readonly SubscriptionCollection subscriptionCollection;

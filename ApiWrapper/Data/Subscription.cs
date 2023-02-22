@@ -61,7 +61,7 @@ namespace ApiWrapper
         }
     }
 
-    public sealed class AllDealsSubscription : SecuritySubscription
+    public sealed class DealsSubscription : SecuritySubscription
     {
         [JsonPropertyName("includeVirtualTrades\"")]
         public bool IncludeVirtualTrades { get; }
@@ -69,13 +69,13 @@ namespace ApiWrapper
         [JsonPropertyName("depth")]
         public int Depth { get; }
 
-        public AllDealsSubscription(Security security, bool includeVirtualTrades, int depth) : base(security, "AllTradesGetAndSubscribe")
+        public DealsSubscription(Security security, bool includeVirtualTrades, int depth) : base(security, "AllTradesGetAndSubscribe")
         {
             IncludeVirtualTrades = includeVirtualTrades;
             Depth = depth;
         }
 
-        public AllDealsSubscription(Security security) : this(security, false, 0)
+        public DealsSubscription(Security security) : this(security, false, 0)
         {
 
         }

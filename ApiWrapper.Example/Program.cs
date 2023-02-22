@@ -1,6 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using ApiWrapper.App;
 using ApiWrapper;
-using ApiWrapper.App;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,4 +16,7 @@ await Host.CreateDefaultBuilder(args)
             {
                 services.AddApiWrapper(config);
                 services.AddHostedService<Example>();
-            }).RunConsoleAsync();
+            }).RunConsoleAsync(); 
+
+
+

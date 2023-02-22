@@ -19,7 +19,7 @@ namespace ApiWrapper
             return serviceCollection
                     .AddSingleton(settings)
                     .AddSingleton<AlorApi>()
-                    .AddSingleton<SecuritiesIntarface, Securities>()
+                    .AddSingleton<ISecurities, Securities>()
                     .AddSingleton<TokenAuthorization>()
                     .AddSingleton<WebsocketClientFactory>()
                     .AddScoped(GetWebsocketClient)
@@ -28,7 +28,7 @@ namespace ApiWrapper
                     .AddScoped<NotificationProvider>()
                     .AddScoped<SubscriptionCollection>()
                     .AddScoped<WebsocketReconnect>()
-                    .AddScoped<SubscriberIntarface, Subscriber>()
+                    .AddScoped<ISubscriber, Subscriber>()
                     .AddHostedService<UpdatingToken>();
         }
 

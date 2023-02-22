@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApiWrapper.Data
+namespace ApiWrapper
 {
     public abstract class Message
     {
@@ -13,10 +13,10 @@ namespace ApiWrapper.Data
 
     public class DealMessage : Message
     {
-        public AllDealsSubscription AllDealsSubscription { get; }
+        public DealsSubscription AllDealsSubscription { get; }
         public Deal Deal { get; }
 
-        public DealMessage(AllDealsSubscription allDealsSubscription, Deal deal)
+        public DealMessage(DealsSubscription allDealsSubscription, Deal deal)
         {
             AllDealsSubscription = allDealsSubscription;
             Deal = deal;

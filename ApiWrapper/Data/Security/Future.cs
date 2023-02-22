@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public class Future
+    public class Future : Security
     {
-
+        public Future() { }
     }
 }

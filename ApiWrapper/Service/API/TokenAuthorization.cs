@@ -22,6 +22,8 @@ namespace ApiWrapper
             return token.Result;
         }
 
+        public Task<Token> TokenAsync() => token;
+
         public async Task UpdateToken()
         {
             var task = GetAssetTokenAsync();

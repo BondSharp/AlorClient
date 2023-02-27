@@ -21,15 +21,15 @@ namespace ApiWrapper
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                var timeLeft = GetTimeLeft();          
+                var timeLeft = await GetTimeLeft();
                 await Task.Delay(timeLeft, stoppingToken);
                 await tokenAuthorization.UpdateToken();
             }
         }
 
-        private TimeSpan GetTimeLeft()
+        private async Task<TimeSpan> GetTimeLeft()
         {
-            var token = tokenAuthorization.Token();
+            var token = await tokenAuthorization.TokenAsync();
             var leftTime = expirationTime - (DateTimeOffset.Now - token.Created);
 
             if (TimeSpan.Zero > leftTime)

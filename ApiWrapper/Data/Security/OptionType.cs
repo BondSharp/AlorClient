@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    internal class Token
+    public enum OptionType
     {
-        public string AccessToken { get; set; }
-        public DateTimeOffset Created { get; private set; } = DateTimeOffset.Now;
+        Сall,
+        Put
     }
 }

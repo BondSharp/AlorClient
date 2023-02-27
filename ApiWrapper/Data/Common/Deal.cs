@@ -9,5 +9,8 @@ namespace ApiWrapper
 
         [JsonPropertyName("existing")]
         public bool existing { get; set; }
+
+        [JsonPropertyName("price")]
+        public double Price { get; set; }
     }
 }

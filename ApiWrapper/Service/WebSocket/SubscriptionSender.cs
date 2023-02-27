@@ -19,13 +19,12 @@ namespace ApiWrapper
             this.client = client;
         }
 
-        public void Send(Subscription subscription)
+        public  void Send(Subscription subscription)
         {
-            var token = tokenAuthorization.Token();
+            var token =  tokenAuthorization.Token();
             var message = ToJson(subscription, token);
             client.Send(message);
         }
-
 
         private string ToJson(Subscription subscription, Token token)
         {

@@ -12,7 +12,7 @@ namespace ApiWrapper
         public double Strike { get; set; }
 
         [JsonIgnore]
-        public OptionType OptionType { get; set; }            
-        
+        public OptionType OptionType { get; set; }  
+
     }
 }

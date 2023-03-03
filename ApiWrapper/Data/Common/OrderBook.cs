@@ -6,10 +6,10 @@ namespace ApiWrapper
     public class OrderBook
     {
         [JsonPropertyName("bids")]
-        public  Offer[] Bids { get; set; }
+        public required  Offer[] Bids { get; set; }
 
         [JsonPropertyName("asks")]
-        public  Offer[] Asks { get; set; }
+        public required Offer[] Asks { get; set; }
 
         [JsonPropertyName("ms_timestamp")]
         [JsonConverter(typeof(TimestampJsonConverter))]

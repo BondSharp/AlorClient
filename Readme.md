@@ -1,5 +1,5 @@
-# Библиотека для работы с [Alor Open Api](https://alor.dev/docs)  на языке C#
-## Пример appsettings.json
+# Р‘РёР±Р»РёРѕС‚РµРєР° РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ [Alor Open Api](https://alor.dev/docs)  РЅР° СЏР·С‹РєРµ C#
+## РџСЂРёРјРµСЂ appsettings.json
 
 ```json
 {
@@ -15,7 +15,7 @@
 }
 ```
 
-- RefreshToken получить его можно по [ссылки](https://alor.dev/open-api-tokens)
-- IsProduction если true то обращение будут к боевому серверу иначе к тестовому 
-- ReconnectTimeout и ErrorReconnectTimeout настройки [websocket-client](https://github.com/Marfusios/websocket-client) 
-- CodesFutures [словарь коротких кодов для фьючерсов](https://www.moex.com/s205)
+- RefreshToken РїРѕР»СѓС‡РёС‚СЊ РµРіРѕ РјРѕР¶РЅРѕ РїРѕ [СЃСЃС‹Р»РєРё](https://alor.dev/open-api-tokens)
+- IsProduction РµСЃР»Рё true С‚Рѕ РѕР±СЂР°С‰РµРЅРёРµ Р±СѓРґСѓС‚ Рє Р±РѕРµРІРѕРјСѓ СЃРµСЂРІРµСЂСѓ РёРЅР°С‡Рµ Рє С‚РµСЃС‚РѕРІРѕРјСѓ 
+- ReconnectTimeout Рё ErrorReconnectTimeout РЅР°СЃС‚СЂРѕР№РєРё [websocket-client](https://github.com/Marfusios/websocket-client) 
+- CodesFutures [СЃР»РѕРІР°СЂСЊ РєРѕСЂРѕС‚РєРёС… РєРѕРґРѕРІ РґР»СЏ С„СЊСЋС‡РµСЂСЃРѕРІ](https://www.moex.com/s205)

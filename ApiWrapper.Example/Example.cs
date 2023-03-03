@@ -1,48 +1,58 @@
 ﻿using Microsoft.Extensions.Hosting;
-using ApiWrapper;
-using ApiWrapper.Example;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace ApiWrapper.App
+namespace ApiWrapper.Example
 {
     internal class Example : BackgroundService
     {
         private readonly ISecurities securities;
         private readonly ISubscriber subscriber;
-        private readonly IServiceProvider serviceProvider;
 
-        public Example(ISecurities securities, ISubscriber subscriber, IServiceProvider serviceProvider)
+        public Example(ISecurities securities, ISubscriber subscriber)
         {
             this.securities = securities;
             this.subscriber = subscriber;
-            this.serviceProvider = serviceProvider;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-
             subscriber.Messages.Subscribe(OnMessage);
             subscriber.Notifications.Subscribe(OnNotification);
 
-
+            var nowDate = DateTimeOffset.Now.Date;
 
             var share = await securities.GetShareAsync("SBER");
-            var optionFinder = serviceProvider.CreateOptionFinder(share, stoppingToken);
-            var optionPut = optionFinder.FindOptionPut();
-            var optionCall = optionFinder.FindOptionCall();
+            var lastDeal = securities.GetLastDealAsync(share);
+
             var future = securities.GetFuturesAsync(share)
-                .Where(x => x.ExpirationDate > DateTimeOffset.Now.Date)
-                .OrderBy(x => x.ExpirationDate)
-                .FirstAsync(stoppingToken);
+               .Where(x => x.ExpirationDate > nowDate)
+               .OrderBy(x => x.ExpirationDate)
+               .FirstAsync(stoppingToken);
+
+            var optionsBoard = securities.GetOptionsBoardsAsync(share)
+                  .Where(x => x.ExpirationDate > nowDate)
+                  .FirstAsync(stoppingToken);
 
             Subscribe(share);
             Subscribe(await future);
-            Subscribe(await optionPut);
-            Subscribe(await optionCall);
+            Subscribe(await optionsBoard, await lastDeal);
         }
+        public void Subscribe(OptionsBoard? optionsBoard, Deal? lastDeal)
+        {
+            if (lastDeal != null)
+            {
+                var call = optionsBoard?.Calls
+                    .Where(call => call.Strike > lastDeal.Price)
+                    .OrderBy(call => call.Strike)
+                    .FirstOrDefault();
+                var put = optionsBoard?.Puts
+                    .Where(call => call.Strike < lastDeal.Price)
+                    .OrderByDescending(call => call.Strike)
+                    .FirstOrDefault();
 
-
-
+                Subscribe(call);
+                Subscribe(put);
+            }
+        }
 
         public void Subscribe(Security? security)
         {
@@ -55,7 +65,37 @@ namespace ApiWrapper.App
 
         private void OnMessage(Message message)
         {
-            Console.WriteLine(message);
+
+            if (message is SecurityMessage securityMessage)
+            {
+                var symbol = securityMessage.SecuritySubscription.Security.Symbol;
+                var textMessage = GetTextMessage(securityMessage);
+                Console.WriteLine($"Received a message '{textMessage}' for {symbol}");
+            }
+        }
+
+        private string? GetTextMessage(SecurityMessage securityMessage)
+        {
+            if (securityMessage is DealMessage dealMessage)
+            {
+                return $"deal with price {dealMessage.Deal.Price}";
+            }
+
+            if (securityMessage is OrderBookMessage orderBookMessage)
+            {
+                var ask = orderBookMessage.OrderBook.Asks
+                    .Select(ask => ask.Price)
+                    .OrderBy(price => price)
+                    .FirstOrDefault();
+
+                var bid = orderBookMessage.OrderBook.Bids
+                   .Select(ask => ask.Price)
+                   .OrderBy(price => price)
+                   .FirstOrDefault();
+
+                return $"orderBook with ask {ask} and bid {bid}";
+            }
+            return null;
         }
 
         private void OnNotification(Notification notification)

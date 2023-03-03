@@ -4,8 +4,8 @@
     {
         Task<Share> GetShareAsync(string symbol);
         IAsyncEnumerable<Future> GetFuturesAsync(Security security);
-        IAsyncEnumerable<Option> GetOptionsAsync(Security security, OptionType optionType);
-
+        IAsyncEnumerable<OptionsBoard> GetOptionsBoardsAsync(Security security);
         Task<Deal?> GetLastDealAsync(Security security);
+        IAsyncEnumerable<Deal> GetDealsAsync(Security security);
     }
 }

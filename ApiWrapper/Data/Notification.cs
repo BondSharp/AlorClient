@@ -13,7 +13,6 @@
             Subscription = subscription;
         }
 
-
         public override string ToString()
         {
             return $"Code : {Code}, Message: {Message} Guid {Subscription.Guid}";

@@ -20,6 +20,7 @@ namespace ApiWrapper
                     .AddSingleton(settings)
                     .AddSingleton<AlorApi>()
                     .AddSingleton<ISecurities, Securities>()
+                    .AddSingleton<SecuritiesApi>()
                     .AddSingleton<TokenAuthorization>()
                     .AddSingleton<WebsocketClientFactory>()
                     .AddScoped(GetWebsocketClient)

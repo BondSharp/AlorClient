@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApiWrapper
 {
-    public class Future : Security
+    public enum Side
     {
-        public Future() { }
+        Buy,
+        Sell
     }
 }

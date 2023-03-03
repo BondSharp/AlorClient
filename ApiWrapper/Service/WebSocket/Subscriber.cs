@@ -1,8 +1,4 @@
 ﻿using ApiWrapper.Service.WebSocket;
-using System.Reactive.Linq;
-using System.Text.Json;
-using Websocket.Client;
-using Websocket.Client.Models;
 
 namespace ApiWrapper
 {
@@ -11,7 +7,6 @@ namespace ApiWrapper
         private readonly SubscriptionSender subscriptionSender;
         private readonly SubscriptionCollection subscriptionCollection;
         public IObservable<Message> Messages { get; }
-
         public IObservable<Notification> Notifications { get; }
 
         public Subscriber(SubscriptionSender subscriptionSender, MessageProvider observableMessage, NotificationProvider notificationProvider, SubscriptionCollection subscriptionCollection)
@@ -37,6 +32,5 @@ namespace ApiWrapper
                 subscriptionSender.Send(new UnSubscription(subscription));
             }
         }
-
     }
 }

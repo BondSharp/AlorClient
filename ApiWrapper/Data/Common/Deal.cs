@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using ApiWrapper.JsonConverter;
+using System.Text.Json.Serialization;
 
 namespace ApiWrapper
 {
@@ -12,5 +13,20 @@ namespace ApiWrapper
 
         [JsonPropertyName("price")]
         public double Price { get; set; }
+
+        [JsonPropertyName("qty")]
+        public int Quantity { get; set; }
+
+        [JsonPropertyName("oi")]
+        public int OpenInterest { get; set; }
+
+        [JsonPropertyName("side")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public Side Side { get; set; }
+
+        [JsonPropertyName("timestamp")]
+        [JsonConverter(typeof(TimestampJsonConverter))]
+        public DateTimeOffset Timestamp { get; set; }
+
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
+﻿using System.Reactive.Linq;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Websocket.Client;
 
 namespace ApiWrapper.Service.WebSocket
@@ -28,7 +23,6 @@ namespace ApiWrapper.Service.WebSocket
                 .Subscribe(observer);
         }
 
-
         private Notification Parse(ResponseMessage obj)
         {
             using (var jsonDocument = JsonDocument.Parse(obj.Text))
@@ -41,6 +35,5 @@ namespace ApiWrapper.Service.WebSocket
                 return new Notification(code, message, subscription);
             }
         }
-
     }
 }

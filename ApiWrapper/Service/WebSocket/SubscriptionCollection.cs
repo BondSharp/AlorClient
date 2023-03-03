@@ -23,7 +23,6 @@ namespace ApiWrapper
 
         public Subscription[] GetSubscriptions() => subscriptions.ToArray();
 
-
         public bool Add(Subscription subscription)
         {
             if (subscriptions.Add(subscription))

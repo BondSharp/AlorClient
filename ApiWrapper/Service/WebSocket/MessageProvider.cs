@@ -34,7 +34,6 @@ namespace ApiWrapper
                 var message = Parse(subscription, data);
 
                 return message;
-
             }
         }
 
@@ -64,7 +63,5 @@ namespace ApiWrapper
             }
             return result;
         }
-
-
     }
 }

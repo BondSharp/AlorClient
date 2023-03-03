@@ -1,15 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Xml.Linq;
 
 namespace ApiWrapper
 {
@@ -26,10 +17,8 @@ namespace ApiWrapper
             isProduction = settings.IsProduction;
         }
 
-        public async Task<T> Get<T>(string path, Dictionary<string, string>? query = null) where T : class
+        public async Task<T> Get<T>(string path, QueryBuilder? query = null) where T : class
         {
-
-
             using var client = CreateClient();
 
             var uri = GetUri(path, query);
@@ -41,10 +30,8 @@ namespace ApiWrapper
             return resut;
         }
 
-        private Uri GetUri(string path, Dictionary<string, string>? query = null)
+        private Uri GetUri(string path, QueryBuilder? queryBuilder = null)
         {
-            var queryBuilder = query != null ? new QueryBuilder(query) : null;
-
             using var client = CreateClient();
 
             var uriBuilder = new UriBuilder(isProduction ? ProductionAddress : DevelopmentAddress)
@@ -56,8 +43,6 @@ namespace ApiWrapper
             return uriBuilder.Uri;
         }
 
-
-
         private HttpClient CreateClient()
         {
             var client = new HttpClient();
@@ -65,8 +50,5 @@ namespace ApiWrapper
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
             return client;
         }
-
-
-
     }
 }

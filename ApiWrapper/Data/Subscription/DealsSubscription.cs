@@ -16,7 +16,7 @@ namespace ApiWrapper
             Depth = depth;
         }
 
-        public DealsSubscription(Security security) : this(security, false, 20)
+        public DealsSubscription(Security security) : this(security, false, 0)
         {
 
         }

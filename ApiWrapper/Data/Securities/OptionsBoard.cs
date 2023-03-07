@@ -2,14 +2,16 @@
 {
     public class OptionsBoard
     {
-        public Option[] Calls { get; }
-        public Option[] Puts { get; }
+        public Option Call { get; }
+        public Option Put { get; }
+        public double Strike { get; }
         public DateTimeOffset ExpirationDate { get; }
 
-        public OptionsBoard(Option[] calls, Option[] puts, DateTimeOffset expirationDate)
+        public OptionsBoard(Option call, Option put, double strike , DateTimeOffset expirationDate)
         {
-            Calls = calls;
-            Puts = puts;
+            Call = call;
+            Put = put;
+            Strike = strike;
             ExpirationDate = expirationDate;
         }
    

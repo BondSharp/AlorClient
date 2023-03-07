@@ -6,10 +6,10 @@ namespace ApiWrapper
     public class Deal
     {
         [JsonPropertyName("id")]
-        public long id { get; set; }
+        public long Id { get; set; }
 
         [JsonPropertyName("existing")]
-        public bool existing { get; set; }
+        public bool Existing { get; set; }
 
         [JsonPropertyName("price")]
         public double Price { get; set; }

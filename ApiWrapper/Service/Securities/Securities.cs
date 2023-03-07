@@ -42,28 +42,22 @@ namespace ApiWrapper
             return api.GetDealsAsync(security.Symbol, true, 100);
         }
 
-
         public async IAsyncEnumerable<OptionsBoard> GetOptionsBoardsAsync(Security security)
         {
-            var options = await GetOptionsAsync(security).ToArrayAsync();
-            foreach (var groupOptions in options.GroupBy(option => option.ExpirationDate).OrderBy(group => group.Key))
-            {             
-                var calls = GetOptions(groupOptions, OptionType.Сall);
-                var puts = GetOptions(groupOptions, OptionType.Put);
-                yield return new OptionsBoard(calls,puts,groupOptions.Key);
+            var options = await GetOptionsAsync(security)
+                .ToArrayAsync();
+            foreach (var groupOptions in options.GroupBy(option => new { option.ExpirationDate, option.Strike }))
+            {
+                var call = groupOptions.FirstOrDefault(options => options.OptionType == OptionType.Сall);
+                var put = groupOptions.FirstOrDefault(options => options.OptionType == OptionType.Put);
+                if (put != null && call != null)
+                {
+                    yield return new OptionsBoard(call, put, groupOptions.Key.Strike, groupOptions.Key.ExpirationDate);
+                }
             }
-            throw new NotImplementedException();
         }
 
-        private Option[] GetOptions(IEnumerable<Option> options, OptionType optionType)
-        {
-            return options
-                     .Where(option => option.OptionType == optionType)
-                     .OrderBy(option => option.Strike)
-                     .ToArray();
-        }
-
-        private async IAsyncEnumerable<Option> GetOptionsAsync(Security security)
+        public async IAsyncEnumerable<Option> GetOptionsAsync(Security security)
         {
             await foreach (var option in api.GetSecurities<Option>("O", security.Symbol))
             {

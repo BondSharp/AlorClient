@@ -8,7 +8,7 @@ namespace ApiWrapper
         public double Price { get; set; }
 
         [JsonPropertyName("volume")]
-        public double Volume { get; set; }
+        public int Volume { get; set; }
 
     }
 }

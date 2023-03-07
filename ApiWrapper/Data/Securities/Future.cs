@@ -4,9 +4,7 @@ namespace ApiWrapper
 {
     public class Future : Security
     {
-
         [JsonPropertyName("cancellation")]
-        public DateTime ExpirationDate { get; set; }
-        
+        public DateTime ExpirationDate { get; set; }        
     }
 }

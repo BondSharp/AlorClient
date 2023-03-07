@@ -16,6 +16,6 @@ namespace ApiWrapper
         public DateTimeOffset Timestamp { get; set; }
 
         [JsonPropertyName("existing")]
-        public bool existing { get; set; }
+        public bool Existing { get; set; }
     }
 }

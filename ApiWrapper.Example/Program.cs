@@ -33,7 +33,7 @@ subscriber.Messages.OfType<SecurityMessage>().Subscribe(securityMessage =>
     {
         var ask = orderBookMessage.OrderBook.Asks
             .Select(ask => ask.Price)
-            .OrderBy(price => price)
+            .OrderByDescending(price => price)
             .FirstOrDefault();
 
         var bid = orderBookMessage.OrderBook.Bids

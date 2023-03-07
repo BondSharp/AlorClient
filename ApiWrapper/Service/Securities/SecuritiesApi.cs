@@ -18,9 +18,8 @@ namespace ApiWrapper
             return security;
         }
 
-        public async IAsyncEnumerable<T> GetSecurities<T>(string cficode, string query)
+        public async IAsyncEnumerable<T> GetSecurities<T>(string cficode, string query, int limit = 100)
         {
-            var limit = 100;
             var offset = 0;
 
             while (true)

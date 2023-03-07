@@ -5,14 +5,13 @@ namespace ApiWrapper
     public class Option : Security
     {
         [JsonPropertyName("cancellation")]
-        public DateTime ExpirationDate { get; set; }
-
+        public required DateTime ExpirationDate { get; set; }
 
         [JsonIgnore]
         public double Strike { get; set; }
 
         [JsonIgnore]
-        public OptionType OptionType { get; set; }  
+        public OptionType OptionType { get; set; }
 
     }
 }

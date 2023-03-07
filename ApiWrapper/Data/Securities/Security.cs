@@ -12,5 +12,6 @@
 
         public required string Board { get; set; }
 
+        public required TradingStatus TradingStatus { get; set; }
     }
 }

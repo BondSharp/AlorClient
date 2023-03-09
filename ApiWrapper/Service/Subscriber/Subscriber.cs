@@ -1,20 +1,18 @@
-﻿using ApiWrapper.Service.WebSocket;
-
+﻿
 namespace ApiWrapper
 {
     internal class Subscriber : ISubscriber
     {
         private readonly SubscriptionSender subscriptionSender;
         private readonly SubscriptionCollection subscriptionCollection;
-        public IObservable<Message> Messages { get; }
-        public IObservable<Notification> Notifications { get; }
+        public IDataProvider DataProvider { get; }
 
-        public Subscriber(SubscriptionSender subscriptionSender, MessageProvider observableMessage, NotificationProvider notificationProvider, SubscriptionCollection subscriptionCollection)
+        public Subscriber(SubscriptionSender subscriptionSender, SubscriptionCollection subscriptionCollection, DataProvider dataProvider)
         {
-            Messages = observableMessage;
-            Notifications = notificationProvider;
             this.subscriptionSender = subscriptionSender;
             this.subscriptionCollection = subscriptionCollection;
+            DataProvider = dataProvider;
+            dataProvider.Reconnects.Subscribe(OnRecontion);
         }
 
         public void Subscribe(Subscription subscription)
@@ -30,6 +28,15 @@ namespace ApiWrapper
             if (subscriptionCollection.Remove(subscription))
             {
                 subscriptionSender.Send(new UnSubscription(subscription));
+            }
+        }
+
+        private void OnRecontion(Reconnect reconnect)
+        {
+            subscriptionCollection.ClearCache();
+            foreach (var subscription in subscriptionCollection.subscriptions)
+            {
+                subscriptionSender.Send(subscription);
             }
         }
     }

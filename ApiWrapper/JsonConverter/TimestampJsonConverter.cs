@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace ApiWrapper.JsonConverter
+namespace ApiWrapper
 {
     public class TimestampJsonConverter : JsonConverter<DateTimeOffset>
     {

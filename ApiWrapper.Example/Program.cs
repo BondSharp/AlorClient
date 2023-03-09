@@ -18,8 +18,8 @@ host.Start();
 
 var securities = host.Services.GetRequiredService<ISecurities>();
 var subscriber = host.Services.GetRequiredService<ISubscriber>();
-
-subscriber.Messages.OfType<SecurityMessage>().Subscribe(securityMessage =>
+var dataProvider = subscriber.DataProvider;
+dataProvider.Messages.OfType<SecurityMessage>().Subscribe(securityMessage =>
 {
     string? textMessage = null;
     var symbol = securityMessage.SecuritySubscription.Security.Symbol;
@@ -43,7 +43,7 @@ subscriber.Messages.OfType<SecurityMessage>().Subscribe(securityMessage =>
 
         textMessage = $"orderBook with ask {ask} and bid {bid}";
     }
-    
+
     Console.WriteLine($"Received a message '{textMessage}' for {symbol}");
 });
 

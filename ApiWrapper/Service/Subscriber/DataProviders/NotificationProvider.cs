@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Websocket.Client;
 
-namespace ApiWrapper.Service.WebSocket
+namespace ApiWrapper
 {
     internal class NotificationProvider : IObservable<Notification>
     {

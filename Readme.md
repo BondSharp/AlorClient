@@ -15,7 +15,8 @@
 }
 ```
 
-- RefreshToken получить его можно по [ссылки](https://alor.dev/open-api-tokens)
-- IsProduction если true то обращение будут к боевому серверу иначе к тестовому 
-- ReconnectTimeout и ErrorReconnectTimeout настройки [websocket-client](https://github.com/Marfusios/websocket-client) 
+- RefreshToken получить можно по [ссылки](https://alor.dev/open-api-tokens)
+- IsProduction являеться ли RefreshToken от боевого сервера
+- ReconnectTimeout время ожидания сообщение от веб-сокет
+- ErrorReconnectTimeout время ожидания для повторно соедение с веб-сокет
 - CodesFutures [словарь коротких кодов для фьючерсов](https://www.moex.com/s205)

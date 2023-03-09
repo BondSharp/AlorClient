@@ -1,4 +1,4 @@
-﻿using ApiWrapper.Service.WebSocket;
+﻿using ApiWrapper.Service.WebSocket.DataProviders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Websocket.Client;
@@ -19,18 +19,32 @@ namespace ApiWrapper
             return serviceCollection
                     .AddSingleton(settings)
                     .AddSingleton<AlorApi>()
-                    .AddSingleton<ISecurities, Securities>()
-                    .AddSingleton<SecuritiesApi>()
                     .AddSingleton<TokenAuthorization>()
-                    .AddSingleton<WebsocketClientFactory>()
-                    .AddScoped(GetWebsocketClient)
-                    .AddScoped<SubscriptionSender>()
-                    .AddScoped<MessageProvider>()
-                    .AddScoped<NotificationProvider>()
-                    .AddScoped<SubscriptionCollection>()
-                    .AddScoped<WebsocketReconnect>()
-                    .AddScoped<ISubscriber, Subscriber>()
-                    .AddHostedService<UpdatingToken>();
+                    .AddHostedService<UpdatingToken>()
+                    .AddSecurities()
+                    .AddSubscriber();
+        }
+
+        private static IServiceCollection AddSecurities(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+             .AddSingleton<ISecurities, Securities>()
+             .AddSingleton<SecuritiesApi>();
+        }
+
+        private static IServiceCollection AddSubscriber(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+                .AddSingleton<WebsocketClientFactory>()
+                .AddScoped<SubscriptionSender>()
+                .AddScoped<SubscriptionCollection>()
+                .AddScoped<ISubscriber, Subscriber>()
+                .AddScoped(GetWebsocketClient)
+                .AddScoped<ReconnectProvider>()
+                .AddScoped<NotificationProvider>()
+                .AddScoped<MessageProvider>()
+                .AddScoped<MessageProvider>()
+                .AddScoped<DataProvider>();
         }
 
         private static IWebsocketClient GetWebsocketClient(IServiceProvider serviceProvider) => serviceProvider.GetRequiredService<WebsocketClientFactory>().Factory();

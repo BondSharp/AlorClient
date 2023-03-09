@@ -9,6 +9,5 @@ namespace ApiWrapper
 
         [JsonPropertyName("volume")]
         public int Volume { get; set; }
-
     }
 }

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Websocket.Client;
 
-namespace ApiWrapper
+namespace ApiWrapper.Service.WebSocket.DataProviders
 {
     internal class MessageProvider : IObservable<Message>
     {
@@ -18,13 +18,13 @@ namespace ApiWrapper
         public IDisposable Subscribe(IObserver<Message> observer)
         {
             return client.MessageReceived
-                .Where(x=>x.Text.StartsWith("{ \"data"))
+                .Where(x => x.Text.StartsWith("{ \"data"))
                 .Select(Parser)
                 .Subscribe(observer);
         }
 
         private Message Parser(ResponseMessage obj)
-        {       
+        {
             using (var jsonDocument = JsonDocument.Parse(obj.Text))
             {
 

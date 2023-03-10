@@ -8,6 +8,7 @@
 	"IsProduction" : true,
 	"ReconnectTimeout" : "0:01:00",
 	"ErrorReconnectTimeout" : "0:01:00",
+	"RefreshingTokenTimeout" : "0:10:00",
 	"CodesFutures" : {
 		"SBER" : "SR"
 	}
@@ -20,3 +21,4 @@
 - ReconnectTimeout время ожидания сообщение от веб-сокет
 - ErrorReconnectTimeout время ожидания для повторно соедение с веб-сокет
 - CodesFutures [словарь коротких кодов для фьючерсов](https://www.moex.com/s205)
+- RefreshingTokenTimeout  время ожидания обновления токена

@@ -5,10 +5,10 @@ namespace AlorClient
     internal class UpdatingToken : BackgroundService
     {
         private readonly TokenAuthorization tokenAuthorization;
-        private readonly TimeSpan expirationTime;
-        public UpdatingToken(TokenAuthorization tokenAuthorization)
+        private readonly TimeSpan refreshingTokenTimeout;
+        public UpdatingToken(TokenAuthorization tokenAuthorization, Settings settings)
         {
-            expirationTime = TimeSpan.FromMinutes(10);
+            refreshingTokenTimeout = settings.RefreshingTokenTimeout;
             this.tokenAuthorization = tokenAuthorization;
         }
 
@@ -25,7 +25,7 @@ namespace AlorClient
         private async Task<TimeSpan> GetTimeLeft()
         {
             var token = await tokenAuthorization.TokenAsync();
-            var leftTime = expirationTime - (DateTimeOffset.Now - token.Created);
+            var leftTime = refreshingTokenTimeout - (DateTimeOffset.Now - token.Created);
 
             if (TimeSpan.Zero > leftTime)
             {

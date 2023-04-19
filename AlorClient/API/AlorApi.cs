@@ -8,6 +8,7 @@ namespace AlorClient
     {
         private readonly TokenAuthorization tokenAuthorization;
         private readonly bool isProduction;
+
         private const string DevelopmentAddress = "https://apidev.alor.ru";
         private const string ProductionAddress = "https://api.alor.ru";
 
@@ -27,6 +28,7 @@ namespace AlorClient
             {
                 throw new NullReferenceException(nameof(resut));
             }
+
             return resut;
         }
 
@@ -48,6 +50,7 @@ namespace AlorClient
             var client = new HttpClient();
             var token = tokenAuthorization.Token();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+
             return client;
         }
     }

@@ -1,18 +1,21 @@
 ﻿
 namespace AlorClient
 {
-    internal class Subscriber : ISubscriber
+    internal class Subscriber : ISubscriber, IDisposable
     {
         private readonly SubscriptionSender subscriptionSender;
         private readonly SubscriptionCollection subscriptionCollection;
+        private readonly IDisposable disposable;
+
         public IDataProvider DataProvider { get; }
+
 
         public Subscriber(SubscriptionSender subscriptionSender, SubscriptionCollection subscriptionCollection, DataProvider dataProvider)
         {
             this.subscriptionSender = subscriptionSender;
             this.subscriptionCollection = subscriptionCollection;
             DataProvider = dataProvider;
-            dataProvider.Reconnects.Subscribe(OnRecontion);
+            disposable = dataProvider.Reconnects.Subscribe(OnRecontion);
         }
 
         public void Subscribe(Subscription subscription)
@@ -33,11 +36,15 @@ namespace AlorClient
 
         private void OnRecontion(Reconnect reconnect)
         {
-            subscriptionCollection.ClearCache();
             foreach (var subscription in subscriptionCollection.subscriptions)
             {
                 subscriptionSender.Send(subscription);
             }
+        }
+
+        public void Dispose()
+        {
+            disposable?.Dispose();
         }
     }
 }

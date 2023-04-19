@@ -26,11 +26,11 @@ namespace AlorClient
         {
             var token = await tokenAuthorization.TokenAsync();
             var leftTime = refreshingTokenTimeout - (DateTimeOffset.Now - token.Created);
-
             if (TimeSpan.Zero > leftTime)
             {
                 return TimeSpan.Zero;
             }
+
             return leftTime;
         }
     }

@@ -20,29 +20,18 @@ namespace AlorClient
 
         public bool Add(Subscription subscription)
         {
-            if (subscriptions.Add(subscription))
+            if (!cache.ContainsKey(subscription.Guid))
             {
-                if (!cache.ContainsValue(subscription))
-                {
-                    cache.Add(subscription.Guid, subscription);
-                }
-                return true;
+                cache.Add(subscription.Guid, subscription);
             }
-            return false;
+            
+            return subscriptions.Add(subscription);
+                  
         }
 
         public bool Remove(Subscription subscription)
         {
             return subscriptions.Remove(subscription);
-        }
-
-        public void ClearCache()
-        {
-            cache.Clear();
-            foreach (var subscription in subscriptions)
-            {
-                cache.Add(subscription.Guid, subscription);
-            }
-        }
+        }      
     }
 }

@@ -7,7 +7,7 @@ namespace AlorClient
 {
     public static class Extentoions
     {
-        private const string configurationKey = "AlorClinet";
+        private const string configurationKey = "AlorClient";
         public static IServiceCollection AddAlorClient(this IServiceCollection serviceCollection, IConfiguration configuration)
         {
             var settings = configuration.GetRequiredSection(configurationKey).Get<Settings>()
@@ -38,7 +38,6 @@ namespace AlorClient
                 .AddScoped<ISubscriber, Subscriber>()
                 .AddScoped(GetWebsocketClient)
                 .AddScoped<ReconnectProvider>()
-                .AddScoped<NotificationProvider>()
                 .AddScoped<MessageProvider>()
                 .AddScoped<MessageProvider>()
                 .AddScoped<DataProvider>();

@@ -1,6 +1,6 @@
 ﻿namespace AlorClient
 {
-    public class Notification
+    public class Notification : Message
     {
         public Subscription Subscription { get; }
         public int Code { get; }

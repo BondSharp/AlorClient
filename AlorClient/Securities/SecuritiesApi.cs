@@ -15,6 +15,7 @@ namespace AlorClient
         public async Task<T> GetSecurity<T>(string symbol) where T : Security
         {
             var security = await alorApi.Get<T>($"{basePath}/MOEX/{symbol}");
+
             return security;
         }
 

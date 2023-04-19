@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Linq;
 using System.Text.Json;
 using Websocket.Client;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AlorClient.Service.WebSocket.DataProviders
 {
@@ -19,25 +20,39 @@ namespace AlorClient.Service.WebSocket.DataProviders
         {
             return client.MessageReceived
                 .Where(x => x.Text.StartsWith("{ \"data"))
-                .Select(Parser)
+                .Select(Parse)
                 .Subscribe(observer);
         }
 
-        private Message Parser(ResponseMessage obj)
+        private Message Parse(ResponseMessage responseMessage)
         {
-            using (var jsonDocument = JsonDocument.Parse(obj.Text))
+            if (responseMessage.Text.StartsWith("{ \"data"))
+            {
+                return ParseMessage(responseMessage);
+            }
+            if (responseMessage.Text.StartsWith("{\"requestGuid"))
+            {
+                return ParseNotification(responseMessage);
+            }
+
+            throw new ArgumentException(nameof(responseMessage));
+        }
+
+        private Message ParseMessage(ResponseMessage responseMessage)
+        {
+            using (var jsonDocument = JsonDocument.Parse(responseMessage.Text))
             {
 
                 var data = jsonDocument.RootElement.GetProperty("data");
                 var guid = jsonDocument.RootElement.GetProperty("guid").GetGuid();
                 var subscription = subscriptionCollection.GetSubscription(guid);
-                var message = Parse(subscription, data);
+                var message = ParseMessage(subscription, data);
 
                 return message;
             }
         }
 
-        private Message Parse(Subscription subscription, JsonElement data)
+        private Message ParseMessage(Subscription subscription, JsonElement data)
         {
             if (subscription is OrderBookSubscription bookSubscription)
             {
@@ -62,6 +77,19 @@ namespace AlorClient.Service.WebSocket.DataProviders
                 throw new ArgumentException(nameof(result));
             }
             return result;
+        }
+
+        private Notification ParseNotification(ResponseMessage responseMessage)
+        {
+            using (var jsonDocument = JsonDocument.Parse(responseMessage.Text))
+            {
+                var guid = jsonDocument.RootElement.GetProperty("requestGuid").GetGuid();
+                var code = jsonDocument.RootElement.GetProperty("httpCode").GetInt32();
+                var message = jsonDocument.RootElement.GetProperty("message").GetString() ?? throw new NullReferenceException();
+                var subscription = subscriptionCollection.GetSubscription(guid);
+
+                return new Notification(code, message, subscription);
+            }
         }
     }
 }

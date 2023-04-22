@@ -5,6 +5,7 @@ namespace AlorClient
     {
         public readonly Dictionary<Guid, Subscription> cache;
         public readonly HashSet<Subscription> subscriptions;
+
         public SubscriptionCollection()
         {
             cache = new Dictionary<Guid, Subscription>();

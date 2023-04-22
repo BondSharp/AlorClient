@@ -1,5 +1,5 @@
 ﻿
-namespace AlorClient
+namespace Data
 {
     public enum Side
     {

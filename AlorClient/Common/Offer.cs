@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using Data;
+using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    public class Offer
+    public class Offer : IOffer
     {
         [JsonPropertyName("price")]
         public double Price { get; set; }

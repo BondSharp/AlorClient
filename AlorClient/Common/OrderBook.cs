@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using Data;
+using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    public class OrderBook
+    public class OrderBook : IOrderBook
     {
         [JsonPropertyName("bids")]
         public required  Offer[] Bids { get; set; }
@@ -16,5 +17,9 @@ namespace AlorClient
 
         [JsonPropertyName("existing")]
         public bool Existing { get; set; }
+
+        IOffer[] IOrderBook.Bids => Bids;
+
+        IOffer[] IOrderBook.Asks => Asks;
     }
 }

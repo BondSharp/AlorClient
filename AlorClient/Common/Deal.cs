@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using Data;
+using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    public class Deal
+    public class Deal : IDeal
     {
         [JsonPropertyName("id")]
         public long Id { get; set; }

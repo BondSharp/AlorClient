@@ -1,4 +1,6 @@
-﻿namespace AlorClient
+﻿using Data;
+
+namespace AlorClient
 {
     public interface ISecurities
     {
@@ -6,7 +8,7 @@
         IAsyncEnumerable<Future> GetFuturesAsync(Security security);
         IAsyncEnumerable<OptionsBoard> GetOptionsBoardsAsync(Security security);
         IAsyncEnumerable<Option> GetOptionsAsync(Security security);
-        Task<Deal?> GetLastDealAsync(Security security);
-        IAsyncEnumerable<Deal> GetDealsAsync(Security security);
+        Task<IDeal?> GetLastDealAsync(Security security);
+        IAsyncEnumerable<IDeal> GetDealsAsync(Security security);
     }
 }

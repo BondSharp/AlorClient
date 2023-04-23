@@ -1,6 +1,6 @@
 ﻿namespace Data
 {
-    public interface IShortSecurity
+    public interface ISecurity
     {
          string Symbol { get;}
     }

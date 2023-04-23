@@ -30,7 +30,7 @@ namespace AlorClient.Example
         public void Subscribe(Security security)
         {
             subscriber.Subscribe(new OrderBookSubscription(security, 20));
-            subscriber.Subscribe(new DealsSubscription(security));
+            subscriber.Subscribe(new DealsSubscription(security,true,10));
         }
         private async Task<Share> GetShareAsync()
         {

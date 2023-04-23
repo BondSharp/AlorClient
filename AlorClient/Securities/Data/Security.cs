@@ -1,6 +1,8 @@
-﻿namespace AlorClient
+﻿using Data;
+
+namespace AlorClient
 {
-    public abstract class Security
+    public abstract class Security : ISecurity
     {
         public required string Symbol { get; set; }
 

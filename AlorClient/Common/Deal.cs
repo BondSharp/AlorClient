@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    public class Deal : IDeal
+    internal class Deal : IDeal
     {
         [JsonPropertyName("id")]
         public long Id { get; set; }

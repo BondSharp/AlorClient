@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Data;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace AlorClient
@@ -31,13 +32,13 @@ namespace AlorClient
             return share;
         }
 
-        public async Task<Deal?> GetLastDealAsync(Security security)
+        public async Task<IDeal?> GetLastDealAsync(Security security)
         {
             return await api.GetDealsAsync(security.Symbol, true, 1).FirstOrDefaultAsync();
 
         }
 
-        public IAsyncEnumerable<Deal> GetDealsAsync(Security security)
+        public IAsyncEnumerable<IDeal> GetDealsAsync(Security security)
         {
             return api.GetDealsAsync(security.Symbol, true, 100);
         }

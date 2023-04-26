@@ -24,10 +24,22 @@ namespace DataStorage
 
         }
 
-        public Security Get(ISecurity shortSecurity)
+        public Security Get(ISecurity security)
         {
-            return Find(shortSecurity)
-                ?? Insert(new Security() { Symbol = shortSecurity.Symbol });
+            return Find(security)
+                ?? Insert(Map(security));
+        }
+
+        private Security Map(ISecurity security)
+        {
+            return new Security
+            {
+                Cancellation = security.Cancellation,
+                CfiCode = security.CfiCode,
+                Exchange = security.Exchange,
+                Shortname = security.Shortname,
+                Symbol = security.Symbol,
+            };
         }
 
         public Security Insert(Security security)

@@ -13,5 +13,13 @@ namespace DataStorage
         [BsonId(true)]
         public long PrimeKey { get; set; }
         public required string Symbol { get; set; }
+
+        public required string Exchange { get; set; }
+
+        public required string Shortname { get; set; }
+
+        public required string CfiCode { get; set; }
+
+        public required DateTime Cancellation { get; set; }
     }
 }

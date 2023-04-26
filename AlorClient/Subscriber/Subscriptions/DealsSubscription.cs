@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Data;
 
 namespace AlorClient
 {
@@ -10,13 +11,13 @@ namespace AlorClient
         [JsonPropertyName("depth")]
         public int Depth { get; }
 
-        public DealsSubscription(Security security, bool includeVirtualTrades, int depth) : base(security, "AllTradesGetAndSubscribe")
+        public DealsSubscription(ISecurity security, bool includeVirtualTrades, int depth) : base(security, "AllTradesGetAndSubscribe")
         {
             IncludeVirtualTrades = includeVirtualTrades;
             Depth = depth;
         }
 
-        public DealsSubscription(Security security) : this(security, false, 0)
+        public DealsSubscription(ISecurity security) : this(security, false, 0)
         {
 
         }

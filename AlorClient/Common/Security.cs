@@ -1,8 +1,9 @@
-﻿using Data;
+﻿using System.Text.Json.Serialization;
+using Data;
 
 namespace AlorClient
 {
-    public abstract class Security : ISecurity
+    internal abstract class Security : ISecurity
     {
         public required string Symbol { get; set; }
 
@@ -14,6 +15,6 @@ namespace AlorClient
 
         public required string Board { get; set; }
 
-        public required TradingStatus TradingStatus { get; set; }
+        public DateTime Cancellation { get; set; }
     }
 }

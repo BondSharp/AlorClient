@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Data;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace AlorClient
 {
@@ -19,7 +20,7 @@ namespace AlorClient
             return security;
         }
 
-        public async IAsyncEnumerable<T> GetSecurities<T>(string cficode, string query, int limit = 100)
+        public async IAsyncEnumerable<ISecurity> GetSecurities(string cficode, string query, int limit = 100)
         {
             var offset = 0;
 
@@ -35,7 +36,7 @@ namespace AlorClient
                         { "offset" , offset.ToString()} ,
                     };
 
-                var securities = await alorApi.Get<T[]>(basePath, queryBuilder);
+                var securities = await alorApi.Get<Security[]>(basePath, queryBuilder);
                 foreach (var security in securities)
                 {
                     yield return security;

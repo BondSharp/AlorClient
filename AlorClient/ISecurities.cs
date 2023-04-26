@@ -4,11 +4,10 @@ namespace AlorClient
 {
     public interface ISecurities
     {
-        Task<Share> GetShareAsync(string symbol);
-        IAsyncEnumerable<Future> GetFuturesAsync(Security security);
-        IAsyncEnumerable<OptionsBoard> GetOptionsBoardsAsync(Security security);
-        IAsyncEnumerable<Option> GetOptionsAsync(Security security);
-        Task<IDeal?> GetLastDealAsync(Security security);
-        IAsyncEnumerable<IDeal> GetDealsAsync(Security security);
+        Task<ISecurity> GetShareAsync(string symbol);
+        IAsyncEnumerable<ISecurity> GetFuturesAsync(ISecurity security);
+        IAsyncEnumerable<ISecurity> GetOptionsAsync(ISecurity security);
+        Task<IDeal?> GetLastDealAsync(ISecurity security);
+        IAsyncEnumerable<IDeal> GetDealsAsync(ISecurity security);
     }
 }

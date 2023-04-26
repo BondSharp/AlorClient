@@ -1,11 +1,12 @@
 ﻿using System.Text.Json.Serialization;
+using Data;
 
 namespace AlorClient
 {
     public abstract class SecuritySubscription : Subscription
     {
         [JsonIgnore]
-        public Security Security { get; }
+        public ISecurity Security { get; }
 
         [JsonPropertyName("code")]
         public string Code => Security.Symbol;
@@ -13,7 +14,7 @@ namespace AlorClient
         [JsonPropertyName("exchange")]
         public string Exchange => Security.Exchange;
 
-        protected SecuritySubscription(Security security, string operationCode) : base(operationCode)
+        protected SecuritySubscription(ISecurity security, string operationCode) : base(operationCode)
         {
             Security = security;
         }

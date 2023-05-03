@@ -24,44 +24,46 @@ namespace Data
 
         public OptionsBoard[] Factory(ISecurity[] options)
         {
+            var result = new List<OptionsBoard>();
 
-            return new OptionsBoard[0];
+
+            foreach (var group in options.GroupBy(option => option.Cancellation))
+            {
+                var items = GetItems(group).ToArray();
+
+                result.Add(new OptionsBoard(items, group.Key));
+            }
+
+            return result.ToArray();
         }
 
-        //private OptionsBoard[] GetOptionsBoard(ISecurity[] options, DateTime expirationDate)
-        //{
-           
-        //    return new OptionsBoard();
-        //}
 
 
-        //public async IAsyncEnumerable<OptionsBoard> GetOptionsBoardsAsync(Security security)
-        //{
-        //    var options = await GetOptionsAsync(security)
-        //        .ToArrayAsync();
-        //    foreach (var groupOptions in options.GroupBy(option => new { option.ExpirationDate, option.Strike }))
-        //    {
-        //        var call = groupOptions.FirstOrDefault(options => options.OptionType == OptionType.Сall);
-        //        var put = groupOptions.FirstOrDefault(options => options.OptionType == OptionType.Put);
-        //        if (put != null && call != null)
-        //        {
-        //            yield return new OptionsBoard(call, put, groupOptions.Key.Strike, groupOptions.Key.ExpirationDate);
-        //        }
-        //    }
-        //}
+        private IEnumerable<OptionsBoardItem> GetItems(IEnumerable<ISecurity> options)
+        {
 
+            foreach (var group in options.GroupBy(GetStrike))
+            {
+                var call = group.FirstOrDefault(securityCfi.IsOptionCall);
+                var put = group.FirstOrDefault(securityCfi.IsOptionPut);
+                if (put != null && call != null)
+                {
+                    yield return new OptionsBoardItem(call, put, group.Key);
+                }
+            }
 
+        }
 
-        //private double GetStrike(Option option)
-        //{
-        //    var match = strikeRegex.Match(option.Shortname);
-        //    if (match.Success)
-        //    {
-        //        var strike = double.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
-        //        return strike;
-        //    }
+        private double GetStrike(ISecurity option)
+        {
+            var match = strikeRegex.Match(option.Shortname);
+            if (match.Success)
+            {
+                var strike = double.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
+                return strike;
+            }
 
-        //    throw new ArgumentException(nameof(option));
-        //}
+            throw new ArgumentException(nameof(option));
+        }
     }
 }

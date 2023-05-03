@@ -50,17 +50,19 @@ namespace AlorClient.Example
                          .FirstAsync();
         }
 
-        private async Task<OptionsBoard> GetOptionsBoardAsync(Task<ISecurity> share)
+        private async Task<OptionsBoardItem> GetOptionsBoardAsync(Task<ISecurity> share)
         {
             var lastDeal = await securities.GetLastDealAsync(await share);
             var options = await securities.GetOptionsAsync(await share).ToArrayAsync();
             var OptionsBoard = optionsBoardFactory.Factory(options)
                        .Where(optionsBoard => optionsBoard.ExpirationDate > DateTime.Now)
                        .OrderBy(optionsBoard => optionsBoard.ExpirationDate)
-                       .ThenBy(optionsBoard => Math.Abs(optionsBoard.Strike - lastDeal?.Price ?? 0))
                        .First();
 
-            return OptionsBoard;
+            return OptionsBoard
+                .Items
+                .OrderBy(item => Math.Abs(item.Strike - lastDeal?.Price ?? 0))
+                .First();
         }
 
     }

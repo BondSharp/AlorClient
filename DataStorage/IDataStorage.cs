@@ -9,6 +9,6 @@ namespace DataStorage
 {
     public interface IDataStorage<T>
     {
-        void Insert(T read);
+        void Insert(T read);       
     }
 }

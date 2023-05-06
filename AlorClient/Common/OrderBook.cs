@@ -17,6 +17,7 @@ namespace AlorClient
 
         [JsonPropertyName("existing")]
         public bool Existing { get; set; }
+        public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.UtcNow;
 
         IOffer[] IOrderBook.Bids => Bids;
 

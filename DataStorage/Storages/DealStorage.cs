@@ -22,12 +22,14 @@ namespace DataStorage
         {
             return new Deal()
             {
-                Security = security,
+                ForeignKey = security.PrimeKey,
                 Id = read.Id,
                 OpenInterest = read.OpenInterest,
                 Price = read.Price,
                 Quantity = read.Quantity,
-                Side = read.Side
+                Side = read.Side,
+                ClientTimestamp = read.ClientTimestamp,
+                Timestamp = read.Timestamp,
             };
         }
     }

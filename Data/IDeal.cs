@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public interface IDeal
+    public interface IDeal : ITimestamp
     {
         long Id { get; }
         double Price { get; }

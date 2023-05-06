@@ -23,8 +23,4 @@
     <ProjectReference Include="..\Data\Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Securities\Data\" />
-  </ItemGroup>
-
 </Project>

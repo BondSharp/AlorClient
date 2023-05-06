@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data
 {
-    public interface IOrderBook : ITimestamp
+    public interface ITimestamp
     {
-        IOffer[] Bids { get; }
+        DateTimeOffset Timestamp { get; }
 
-        IOffer[] Asks { get; }
+        DateTimeOffset ClientTimestamp { get; set; }
     }
 }

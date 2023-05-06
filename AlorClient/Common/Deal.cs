@@ -27,6 +27,6 @@ namespace AlorClient
         [JsonPropertyName("timestamp")]
         [JsonConverter(typeof(TimestampJsonConverter))]
         public DateTimeOffset Timestamp { get; set; }
-
+        public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.Now;
     }
 }

@@ -7,6 +7,9 @@ namespace DataStorage
     internal class BaseData
     {
         [BsonRef]
-        public required Security Security { get; set; }
+        public required long ForeignKey { get; set; }
+
+        public required DateTimeOffset Timestamp { get; set; }
+        public required DateTimeOffset ClientTimestamp { get; set; }
     }
 }

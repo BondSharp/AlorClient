@@ -13,10 +13,10 @@ namespace DataStorage
     {
         [BsonId(true)]
         public long PrimeKey { get; set; }
-        public long Id { get; set; }
-        public double Price { get; set; }
-        public int Quantity { get; set; }
-        public int OpenInterest { get; set; }
-        public Side Side { get; set; }
+        public required long Id { get; set; }
+        public required double Price { get; set; }
+        public required int Quantity { get; set; }
+        public required int OpenInterest { get; set; }
+        public required Side Side { get; set; }
     }
 }

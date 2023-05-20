@@ -18,7 +18,11 @@ namespace AlorClient
             isProduction = settings.IsProduction;
         }
 
-        public async Task<T> Get<T>(string path, QueryBuilder? query = null) where T : class
+        public async Task<T> Get<T>(string path) where T : class
+        {
+            return await Get<T>(path, new QueryBuilder());
+        }
+        public async Task<T> Get<T>(string path, QueryBuilder query) where T : class
         {
             using var client = CreateClient();
 
@@ -32,14 +36,14 @@ namespace AlorClient
             return resut;
         }
 
-        private Uri GetUri(string path, QueryBuilder? queryBuilder = null)
+        private Uri GetUri(string path, QueryBuilder queryBuilder)
         {
             using var client = CreateClient();
 
             var uriBuilder = new UriBuilder(isProduction ? ProductionAddress : DevelopmentAddress)
             {
                 Path = path,
-                Query = queryBuilder?.ToString()
+                Query = queryBuilder.ToString()
             };
 
             return uriBuilder.Uri;

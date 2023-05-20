@@ -17,7 +17,7 @@ namespace DataStorage
             this.serviceProvider = serviceProvider;
         }
 
-        public IDataStorage<IDeal> DeadFactory(ISecurity security)
+        public IDealStorage  DeadFactory(ISecurity security)
         {
             return GetDataStorage<DealStorage>(security);
         }

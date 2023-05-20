@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataStorage
 {
-    internal class DealStorage : DataStorage<Deal,IDeal>
+    internal class DealStorage : DataStorage<Deal,IDeal>, IDealStorage
     {
         private readonly Security security;
 

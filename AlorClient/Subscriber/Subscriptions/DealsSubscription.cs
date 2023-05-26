@@ -5,7 +5,7 @@ namespace AlorClient
 {
     public sealed class DealsSubscription : SecuritySubscription
     {
-        [JsonPropertyName("includeVirtualTrades\"")]
+        [JsonPropertyName("includeVirtualTrades")]
         public bool IncludeVirtualTrades { get; }
 
         [JsonPropertyName("depth")]

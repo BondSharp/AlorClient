@@ -15,13 +15,22 @@ namespace AlorClient
             api = securitiesApi;
         }
 
-        public IAsyncEnumerable<ISecurity> GetFuturesAsync(ISecurity security)
+        private string GetCode(ISecurity security)
         {
             if (codesFutures.TryGetValue(security.Symbol, out var code))
             {
-                return api.GetSecurities("FF", code);
+                return code;
             }
+
             throw new Exception($"Not found key '{security.Symbol}' of 'СodesFutures'");
+        }
+
+        public IAsyncEnumerable<ISecurity> GetFuturesAsync(ISecurity security)
+        {
+            var code = GetCode(security);
+
+            return api.GetSecurities("FF", code);
+
         }
 
         public async Task<ISecurity> GetShareAsync(string symbol)
@@ -43,13 +52,21 @@ namespace AlorClient
 
         public async IAsyncEnumerable<ISecurity> GetOptionsAsync(ISecurity security)
         {
-            await foreach (var option in api.GetSecurities("O", security.Symbol))
+            var code = GetCode(security);
+
+            await foreach (var option in api.GetSecurities("OCE", code)) 
+            {
+
+                yield return option;
+            }
+
+            await foreach (var option in api.GetSecurities("OPE", code))
             {
 
                 yield return option;
             }
         }
 
- 
+
     }
 }

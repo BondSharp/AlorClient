@@ -3,7 +3,7 @@ using Data;
 
 namespace AlorClient
 {
-    internal abstract class Security : ISecurity
+    internal  class Security : ISecurity
     {
         public required string Symbol { get; set; }
 

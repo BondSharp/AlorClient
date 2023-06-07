@@ -1,5 +1,6 @@
 ﻿using AlorClient;
 using AlorClient.Example;
+using Data;
 using DataStorage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ var host = Host.CreateDefaultBuilder(args)
             {
                 services
                 .AddAlorClient(config)
+                .AddData()
                 .AddDataStorage()
                 .AddScoped<SimpleSubscription>()
                 .AddScoped<SimpleEchoMessage>()

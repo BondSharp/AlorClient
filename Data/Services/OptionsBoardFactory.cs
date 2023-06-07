@@ -41,16 +41,25 @@ namespace Data
 
         private IEnumerable<OptionsBoardItem> GetItems(IEnumerable<ISecurity> options)
         {
-
+            var result = new List<OptionsBoardItem>();
             foreach (var group in options.GroupBy(GetStrike))
             {
-                var call = group.FirstOrDefault(securityCfi.IsOptionCall);
-                var put = group.FirstOrDefault(securityCfi.IsOptionPut);
-                if (put != null && call != null)
+                var array = group.ToArray();
+                try
                 {
-                    yield return new OptionsBoardItem(call, put, group.Key);
+                    var call = array.Single(securityCfi.IsOptionCall);
+                    var put = array.Single(securityCfi.IsOptionPut);
+                    var item = new OptionsBoardItem(call, put, group.Key);
+                    result.Add(item);
                 }
+                catch
+                {
+
+                }
+
+
             }
+            return result;
 
         }
 

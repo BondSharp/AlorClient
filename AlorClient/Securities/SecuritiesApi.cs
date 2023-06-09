@@ -20,7 +20,7 @@ namespace AlorClient
             return security;
         }
 
-        public async IAsyncEnumerable<ISecurity> GetSecurities(string cficode, string query, int limit = 100)
+        public async IAsyncEnumerable<ISecurity> GetSecurities(string cficode, string query, int limit = 10000)
         {
             var offset = 0;
 

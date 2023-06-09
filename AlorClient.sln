@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{137F550D-9EC4-4610-B946-29AB89C08814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Data\Common.csproj", "{137F550D-9EC4-4610-B946-29AB89C08814}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStorage", "DataStorage\DataStorage.csproj", "{5BD79BE7-8030-42D1-A78A-C9BDCB8EE157}"
 EndProject

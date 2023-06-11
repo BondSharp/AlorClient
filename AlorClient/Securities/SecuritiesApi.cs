@@ -13,9 +13,9 @@ namespace AlorClient
             this.alorApi = alorApi;
         }
 
-        public async Task<T> GetSecurity<T>(string symbol) where T : Security
+        public async Task<ISecurity> GetSecurity(string symbol)
         {
-            var security = await alorApi.Get<T>($"{basePath}/MOEX/{symbol}");
+            var security = await alorApi.Get<Security>($"{basePath}/MOEX/{symbol}");
 
             return security;
         }
@@ -49,7 +49,7 @@ namespace AlorClient
             }
         }
 
-        public async IAsyncEnumerable<Deal> GetDealsAsync(string symbol, bool descending, int batchSize)
+        public async IAsyncEnumerable<IDeal> GetDealsAsync(string symbol, bool descending, int batchSize)
         {
             var path = $"{basePath}/MOEX/{symbol}/alltrades";
 

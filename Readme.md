@@ -8,10 +8,7 @@
 	"IsProduction" : true,
 	"ReconnectTimeout" : "0:01:00",
 	"ErrorReconnectTimeout" : "0:01:00",
-	"RefreshingTokenTimeout" : "0:10:00",
-	"CodesFutures" : {
-		"SBER" : "SR"
-	}
+	"RefreshingTokenTimeout" : "0:10:00"
   }
 }
 ```
@@ -20,5 +17,4 @@
 - IsProduction являеться ли RefreshToken от production
 - ReconnectTimeout время ожидания сообщение от WebSocket
 - ErrorReconnectTimeout время ожидания для повторно соедение с WebSocket
-- CodesFutures [словарь коротких кодов для фьючерсов](https://www.moex.com/s205)
 - RefreshingTokenTimeout  время ожидания обновления token

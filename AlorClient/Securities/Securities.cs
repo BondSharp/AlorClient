@@ -6,36 +6,23 @@ namespace AlorClient
 {
     internal class Securities : ISecurities
     {
-        private readonly Dictionary<string, string> codesFutures;
         private readonly SecuritiesApi api;
 
-        public Securities(SecuritiesApi securitiesApi, Settings settings)
+        public Securities(SecuritiesApi securitiesApi)
         {
-            codesFutures = settings.CodesFutures;
             api = securitiesApi;
         }
 
-        private string GetCode(ISecurity security)
+        public IAsyncEnumerable<ISecurity> GetFuturesAsync(string symbol)
         {
-            if (codesFutures.TryGetValue(security.Symbol, out var code))
-            {
-                return code;
-            }
 
-            throw new Exception($"Not found key '{security.Symbol}' of 'СodesFutures'");
-        }
-
-        public IAsyncEnumerable<ISecurity> GetFuturesAsync(ISecurity security)
-        {
-            var code = GetCode(security);
-
-            return api.GetSecurities("FF", code);
+            return api.GetSecurities("FF", symbol);
 
         }
 
-        public async Task<ISecurity> GetShareAsync(string symbol)
+        public async Task<ISecurity> GetAsync(string symbol)
         {
-            var share = await api.GetSecurity<Security>(symbol);
+            var share = await api.GetSecurity(symbol);
             return share;
         }
 
@@ -50,17 +37,16 @@ namespace AlorClient
             return api.GetDealsAsync(security.Symbol, true, 100);
         }
 
-        public async IAsyncEnumerable<ISecurity> GetOptionsAsync(ISecurity security)
+        public async IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol)
         {
-            var code = GetCode(security);
 
-            await foreach (var option in api.GetSecurities("OCE", code)) 
+            await foreach (var option in api.GetSecurities("OCE", symbol)) 
             {
 
                 yield return option;
             }
 
-            await foreach (var option in api.GetSecurities("OPE", code))
+            await foreach (var option in api.GetSecurities("OPE", symbol))
             {
 
                 yield return option;

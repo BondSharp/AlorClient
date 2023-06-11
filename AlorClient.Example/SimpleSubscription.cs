@@ -17,7 +17,7 @@ namespace AlorClient.Example
         public async void Subscribe()
         {
             var share = GetShareAsync();
-            var future = GetFutureAsync(share);
+            var future = GetFutureAsync();
             var optionsBoard = await GetOptionsBoardAsync(share);
             Subscribe(await share);
             Subscribe(await future);
@@ -32,14 +32,14 @@ namespace AlorClient.Example
         }
         private async Task<ISecurity> GetShareAsync()
         {
-            var share = await securities.GetShareAsync("SBER");
+            var share = await securities.GetAsync("SBER");
 
             return share;
         }
 
-        private async Task<ISecurity> GetFutureAsync(Task<ISecurity> share)
+        private async Task<ISecurity> GetFutureAsync()
         {
-            return await securities.GetFuturesAsync(await share)
+            return await securities.GetFuturesAsync("SP")
                          .Where(x => x.Cancellation > DateTime.Now)
                          .OrderBy(x => x.Cancellation)
                          .FirstAsync();
@@ -48,7 +48,7 @@ namespace AlorClient.Example
         private async Task<OptionsBoardItem> GetOptionsBoardAsync(Task<ISecurity> share)
         {
             var lastDeal = await securities.GetLastDealAsync(await share);
-            var options = await securities.GetOptionsAsync(await share).ToArrayAsync();
+            var options = await securities.GetOptionsAsync("SP").ToArrayAsync();
             var OptionsBoard = optionsBoardFactory.Factory(options)
                        .Where(optionsBoard => optionsBoard.ExpirationDate > DateTime.Now)
                        .OrderBy(optionsBoard => optionsBoard.ExpirationDate)

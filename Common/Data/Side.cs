@@ -1,5 +1,5 @@
 ﻿
-namespace Data
+namespace Common
 {
     public enum Side
     {

@@ -6,10 +6,10 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Data.Services;
+using Common.Services;
 using Microsoft.VisualBasic.FileIO;
 
-namespace Data
+namespace Common
 {
     public class OptionsBoardFactory
     {

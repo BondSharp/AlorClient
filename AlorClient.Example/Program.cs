@@ -1,6 +1,6 @@
 ﻿using AlorClient;
+using Common;
 using AlorClient.Example;
-using Data;
 using DataStorage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

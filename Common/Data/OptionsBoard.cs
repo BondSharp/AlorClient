@@ -1,4 +1,4 @@
-﻿namespace Data
+﻿namespace Common
 {
     public class OptionsBoard
     {

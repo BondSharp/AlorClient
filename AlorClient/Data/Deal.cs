@@ -1,4 +1,4 @@
-﻿using Data;
+﻿using Common;
 using System.Text.Json.Serialization;
 
 namespace AlorClient

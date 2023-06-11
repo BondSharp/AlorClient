@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Services
+namespace Common.Services
 {
     public class SecurityCfi
     {

@@ -9,20 +9,20 @@ using Common;
 
 namespace Monitoring
 {
-    internal class SubscriptionManager
+    internal class AutoSubscriber
     {
         private readonly ISubscriber subscriber;
         private readonly ISecurities securities;
         private readonly Configuration configuration;
 
-        public SubscriptionManager(ISubscriber subscriber, ISecurities securities, Configuration configuration)
+        public AutoSubscriber(ISubscriber subscriber, ISecurities securities, Configuration configuration)
         {
             this.subscriber = subscriber;
             this.securities = securities;
             this.configuration = configuration;
         }
 
-        public async void Subscribe()
+        public void Subscribe()
         {
             foreach (var security in GetSecurities())
             {

@@ -45,19 +45,10 @@ namespace Common
             foreach (var group in options.GroupBy(GetStrike))
             {
                 var array = group.ToArray();
-                try
-                {
-                    var call = array.Single(securityCfi.IsOptionCall);
-                    var put = array.Single(securityCfi.IsOptionPut);
-                    var item = new OptionsBoardItem(call, put, group.Key);
-                    result.Add(item);
-                }
-                catch
-                {
-
-                }
-
-
+                var call = array.Single(securityCfi.IsOptionCall);
+                var put = array.Single(securityCfi.IsOptionPut);
+                var item = new OptionsBoardItem(call, put, group.Key);
+                result.Add(item);
             }
             return result;
 

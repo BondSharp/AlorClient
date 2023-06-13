@@ -3,7 +3,7 @@ using LiteDB;
 
 namespace DataStorage
 {
-    internal abstract class DataStorage<Data,T> : IDataStorage<T> where Data : BaseData
+    internal abstract class DataStorage<Data,T>  where Data : BaseData
     {
         private readonly ILiteDatabase liteDatabase;
 

@@ -32,7 +32,7 @@ namespace Monitoring
 
             using (var scope = serviceProvider.CreateScope())
             {
-                scope.ServiceProvider.GetRequiredService<SubscriptionManager>().Subscribe();
+                scope.ServiceProvider.GetRequiredService<AutoSubscriber>().Subscribe();
                 var disposable = scope.ServiceProvider.GetRequiredService<Tracker>().Tracke();
                 while (stoppingToken.IsCancellationRequested && finish > DateTimeOffset.Now)
                 {

@@ -10,7 +10,7 @@ namespace DataStorage
         public static IServiceCollection AddDataStorage(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped<ILiteDatabase>(x => new LiteDatabase(@"./DataStorage.db"));
-            serviceCollection.AddScoped<IDataStorageFactory, DataStorageFactory>();
+            serviceCollection.AddScoped<IDataStorageWriter, DataStorageWriter>();
             serviceCollection.AddScoped<SecurityStorage>();
             return serviceCollection;
         }

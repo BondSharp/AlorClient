@@ -15,7 +15,7 @@ namespace Common.Services
 
         public bool IsOptionPut(ISecurity security)
         {
-            return security.CfiCode.StartsWith("OC");
+            return security.CfiCode.StartsWith("OP");
         }
     }
 }

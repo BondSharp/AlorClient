@@ -11,12 +11,12 @@ namespace AlorClient.Example
     internal class SimpleDataWriter
     {
         private readonly ISubscriber subscriber;
-        private readonly IDataStorageFactory dataStorageFactory;
+        private readonly IDataStorageWriter writer;
 
-        public SimpleDataWriter(ISubscriber subscriber, IDataStorageFactory dataStorageFactory)
+        public SimpleDataWriter(ISubscriber subscriber, IDataStorageWriter writer)
         {
             this.subscriber = subscriber;
-            this.dataStorageFactory = dataStorageFactory;
+            this.writer = writer;
         }
 
         public IDisposable Write()
@@ -28,9 +28,7 @@ namespace AlorClient.Example
         {
             if (message is DealMessage dealMessage)
             {
-                dataStorageFactory
-                    .DeadFactory(dealMessage.SecuritySubscription.Security)
-                    .Insert(dealMessage.Deal);
+                writer.Write(dealMessage.SecuritySubscription.Security, dealMessage.Deal);
             }
         }
     }

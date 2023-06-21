@@ -39,18 +39,11 @@ namespace AlorClient
 
         public async IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol)
         {
-
-            await foreach (var option in api.GetSecurities("OCE", symbol)) 
+            await foreach (var option in api.GetSecurities("O", symbol)) 
             {
 
                 yield return option;
-            }
-
-            await foreach (var option in api.GetSecurities("OPE", symbol))
-            {
-
-                yield return option;
-            }
+            }           
         }
 
 

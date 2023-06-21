@@ -23,7 +23,7 @@ var host = Host.CreateDefaultBuilder(args)
                 .AddData()
                 .AddDataStorage()
                 .AddSingleton(configuration)
-                .AddSingleton<Demon>()
+                .AddHostedService<Demon>()
                 .AddScoped<AutoSubscriber>()
                 .AddScoped<Tracker>()
                 ;
@@ -31,4 +31,4 @@ var host = Host.CreateDefaultBuilder(args)
 host.Start();
 
 
-host.WaitForShutdown();
+await host.WaitForShutdownAsync();

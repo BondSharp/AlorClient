@@ -20,7 +20,7 @@ namespace Monitoring
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
 
-            while (stoppingToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 await RunAsync(stoppingToken);
             }
@@ -34,7 +34,7 @@ namespace Monitoring
             {
                 scope.ServiceProvider.GetRequiredService<AutoSubscriber>().Subscribe();
                 var disposable = scope.ServiceProvider.GetRequiredService<Tracker>().Tracke();
-                while (stoppingToken.IsCancellationRequested && finish > DateTimeOffset.Now)
+                while (!stoppingToken.IsCancellationRequested && finish > DateTimeOffset.Now)
                 {
                     await Task.Delay(1000);
                 }

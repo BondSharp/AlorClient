@@ -33,13 +33,24 @@ namespace Monitoring
 
         private ISecurity[] GetSecurities()
         {
-            var result = configuration.Symbols.Select(securities.GetAsync)
-                .ToArray()
-                .Select(async task => await task)
-                .Select(x => x.Result)
-                .ToArray();
+            var symbols = configuration
+                .Symbols
+                .Select(securities.GetAsync)
+                .Select(async x => await x)
+                .Select(x => x.Result);
+            var futures = configuration.Futures
+                .ToAsyncEnumerable()
+                .SelectMany(securities.GetFuturesAsync)
+                .ToEnumerable();
+            var options = configuration.Options
+                .ToAsyncEnumerable()
+                .SelectMany(securities.GetOptionsAsync)
+                .ToEnumerable();
+                
 
-            return result;
+
+            return symbols.Concat(futures).Concat(options).ToArray();
         }
+
     }
 }

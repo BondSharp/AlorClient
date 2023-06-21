@@ -10,5 +10,9 @@ namespace Monitoring
     {
         public required string[] Symbols { get; set; }
 
+        public required string[] Futures { get; set; } = new string[0];
+
+        public required string[] Options { get; set; } = new string[0];
+
     }
 }

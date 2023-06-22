@@ -16,6 +16,7 @@ var configuration = config.GetRequiredSection("Monitoring").Get<Configuration>()
        ?? throw new Exception($"Not found configuration wthi key Monitoring");
 
 var host = Host.CreateDefaultBuilder(args)
+            .UseSystemd()
             .ConfigureServices((hostContext, services) =>
             {
                 services

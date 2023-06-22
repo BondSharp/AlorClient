@@ -1,0 +1,13 @@
+[Unit]
+Description=Monitoring console application
+
+[Service]
+
+SyslogIdentifier=Monitoring
+
+WorkingDirectory=/AlorClient/Monitoring/bin/Release
+
+ExecStart=/usr/bin/dotnet Monitoring.dll
+
+[Install]
+WantedBy=multi-user.target

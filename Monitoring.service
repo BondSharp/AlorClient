@@ -5,9 +5,9 @@ Description=Monitoring console application
 
 SyslogIdentifier=Monitoring
 
-WorkingDirectory=/AlorClient/Monitoring/bin/Release
+WorkingDirectory=/root/AlorClient/Monitoring/bin/Release/net7.0
 
-ExecStart=/usr/bin/dotnet Monitoring.dll
+ExecStart=/usr/bin/dotnet /root/AlorClient/Monitoring/bin/Release/net7.0/Monitoring.dll
 
 [Install]
 WantedBy=multi-user.target

@@ -27,12 +27,17 @@ namespace DataStorage
 
         public void Write(ISecurity security, IOrderBook orderBook)
         {
-
+            OrderBookFactory(security).Insert(orderBook);
         }
 
         private DealStorage DeadFactory(ISecurity security)
         {
             return GetDataStorage<DealStorage>(security);
+        }
+
+        private OrderBookStorage OrderBookFactory(ISecurity security)
+        {
+            return GetDataStorage<OrderBookStorage>(security);
         }
 
         private T GetDataStorage<T>(ISecurity aSecurity)

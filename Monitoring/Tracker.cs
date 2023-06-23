@@ -30,6 +30,11 @@ namespace Monitoring
             {
                 writer.Write(dealMessage.SecuritySubscription.Security, dealMessage.Deal);
             }
+
+            if(message is OrderBookMessage orderBookMessage)
+            {
+                writer.Write(orderBookMessage.SecuritySubscription.Security, orderBookMessage.OrderBook);
+            }
         }
 
 

@@ -27,7 +27,7 @@ namespace Monitoring
             foreach (var security in GetSecurities())
             {
                 subscriber.Subscribe(new DealsSubscription(security));
-                subscriber.Subscribe(new DealsSubscription(security));
+                subscriber.Subscribe(new OrderBookSubscription(security,20));
             }
         }
 

@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlorClient", "AlorClient\Al
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0CE97A1-80A5-4C76-8D60-006D683B3152}"
 	ProjectSection(SolutionItems) = preProject
+		Monitoring.service = Monitoring.service
 		Readme.md = Readme.md
 	EndProjectSection
 EndProject
@@ -16,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataStorage", "DataStorage\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{643F2DEC-4C02-42C5-A9A3-E18B97E06D6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring", "Monitoring\Monitoring.csproj", "{B493F58B-F500-4E5F-8DB5-246CF674361D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Monitoring", "Monitoring\Monitoring.csproj", "{B493F58B-F500-4E5F-8DB5-246CF674361D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

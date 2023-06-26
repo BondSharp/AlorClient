@@ -34,10 +34,10 @@ namespace AlorClient.Example
 
         private async Task<ISecurity> GetFutureAsync()
         {
-            return await securities.GetFuturesAsync("SP")
+            return (await securities.GetFuturesAsync("SP"))
                          .Where(x => x.Cancellation > DateTime.Now)
                          .OrderBy(x => x.Cancellation)
-                         .FirstAsync();
+                         .First();
         }
 
     }

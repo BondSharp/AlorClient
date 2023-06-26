@@ -21,33 +21,24 @@ namespace AlorClient
             return security;
         }
 
-        public async IAsyncEnumerable<ISecurity> GetSecurities(string cficode, string query, int limit = 10000)
+        public async Task<ISecurity[]> GetSecurities(string cficode, string query)
         {
-            var offset = 0;
 
-            while (true)
-            {
-                var queryBuilder = new QueryBuilder()
+            var queryBuilder = new QueryBuilder()
                     {
                         { "cficode", cficode },
                         { "query", query },
-                        { "limit", limit.ToString() },
+                        { "limit", "1000" },
                         { "exchange", "MOEX" },
                         { "orderBy" , "cancellation"} ,
-                        { "offset" , offset.ToString()} ,
+                        { "offset" , "0"} ,
                     };
 
-                var securities = await alorApi.Get<Security[]>(basePath, queryBuilder);
-                foreach (var security in securities)
-                {
-                    yield return security;
-                }
-                offset += securities.Length;
-                if (securities.Length < limit)
-                {
-                    break;
-                }
-            }
+            var securities = await alorApi.Get<Security[]>(basePath, queryBuilder);
+
+            return securities;
+
         }
+
     }
 }

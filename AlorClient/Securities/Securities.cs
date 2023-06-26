@@ -14,7 +14,7 @@ namespace AlorClient
             api = securitiesApi;
         }
 
-        public IAsyncEnumerable<ISecurity> GetFuturesAsync(string symbol)
+        public Task<ISecurity[]> GetFuturesAsync(string symbol)
         {
 
             return api.GetSecurities("FF", symbol);
@@ -27,13 +27,9 @@ namespace AlorClient
             return share;
         }
 
-        public async IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol)
+        public Task<ISecurity[]> GetOptionsAsync(string symbol)
         {
-            await foreach (var option in api.GetSecurities("O", symbol))
-            {
-
-                yield return option;
-            }
+            return api.GetSecurities("O", symbol);
         }
 
 

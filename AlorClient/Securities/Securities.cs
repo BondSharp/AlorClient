@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
+using AlorClient.Domain;
 using Common;
 
 namespace AlorClient
@@ -26,24 +27,33 @@ namespace AlorClient
             return share;
         }
 
-        public async Task<IDeal?> GetLastDealAsync(ISecurity security)
+        public async Task<Deal?> GetLastDealAsync(ISecurity security)
         {
-            return await api.GetDealsAsync(security.Symbol, true, 1).FirstOrDefaultAsync();
+            return await api.GetDealsAsync(security.Symbol, true, 1).Select(Map).FirstOrDefaultAsync();
 
         }
 
-        public IAsyncEnumerable<IDeal> GetDealsAsync(ISecurity security)
+        public IAsyncEnumerable<Deal> GetDealsAsync(ISecurity security)
         {
-            return api.GetDealsAsync(security.Symbol, true, 100);
+            return api.GetDealsAsync(security.Symbol, true, 100).Select(Map);
+        }
+
+        private Deal Map(DealDto dealDto)
+        {
+            return new Deal()
+            {
+                Side = dealDto.Side,
+
+            };
         }
 
         public async IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol)
         {
-            await foreach (var option in api.GetSecurities("O", symbol)) 
+            await foreach (var option in api.GetSecurities("O", symbol))
             {
 
                 yield return option;
-            }           
+            }
         }
 
 

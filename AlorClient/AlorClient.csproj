@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlorClient.Domain\AlorClient.Domain.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 

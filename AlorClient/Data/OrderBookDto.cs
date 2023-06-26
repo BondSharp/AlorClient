@@ -3,13 +3,13 @@ using Common;
 
 namespace AlorClient
 {
-    public class OrderBook : IOrderBook
+    public class OrderBookDto
     {
         [JsonPropertyName("bids")]
-        public required  Offer[] Bids { get; set; }
+        public required  OfferDto[] Bids { get; set; }
 
         [JsonPropertyName("asks")]
-        public required Offer[] Asks { get; set; }
+        public required OfferDto[] Asks { get; set; }
 
         [JsonPropertyName("ms_timestamp")]
         [JsonConverter(typeof(TimestampJsonConverter))]
@@ -18,9 +18,5 @@ namespace AlorClient
         [JsonPropertyName("existing")]
         public bool Existing { get; set; }
         public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.UtcNow;
-
-        IOffer[] IOrderBook.Bids => Bids;
-
-        IOffer[] IOrderBook.Asks => Asks;
     }
 }

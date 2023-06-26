@@ -56,13 +56,13 @@ namespace AlorClient.Service.WebSocket.DataProviders
         {
             if (subscription is OrderBookSubscription bookSubscription)
             {
-                var orderBook = Deserialize<OrderBook>(data);
+                var orderBook = Deserialize<OrderBookDto>(data);
                 return new OrderBookMessage(bookSubscription, orderBook);
             }
 
             if (subscription is DealsSubscription allDealsSubscription)
             {
-                var deal = Deserialize<Deal>(data);
+                var deal = Deserialize<DealDto>(data);
                 return new DealMessage(allDealsSubscription, deal);
             }
 

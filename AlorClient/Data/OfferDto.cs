@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    public class Offer : IOffer
+    public class OfferDto 
     {
         [JsonPropertyName("price")]
         public double Price { get; set; }

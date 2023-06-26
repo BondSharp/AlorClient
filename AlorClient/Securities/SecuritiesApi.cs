@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AlorClient.Domain;
+using Common;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace AlorClient
@@ -49,7 +50,7 @@ namespace AlorClient
             }
         }
 
-        public async IAsyncEnumerable<IDeal> GetDealsAsync(string symbol, bool descending, int batchSize)
+        public async IAsyncEnumerable<DealDto> GetDealsAsync(string symbol, bool descending, int batchSize)
         {
             var path = $"{basePath}/MOEX/{symbol}/alltrades";
 
@@ -68,7 +69,7 @@ namespace AlorClient
                     queryBuilder.Add("from", from.Value.ToUnixTimeSeconds().ToString());
                 }
 
-                var deals = await alorApi.Get<Deal[]>(path, queryBuilder);
+                var deals = await alorApi.Get<DealDto[]>(path, queryBuilder);
 
                 foreach (var deal in deals)
                 {

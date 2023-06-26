@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace AlorClient.Domain
 {
-    public interface IOrderBook : ITimestamp
+    public enum Side
     {
-        IOffer[] Bids { get; }
-
-        IOffer[] Asks { get; }
+        Buy,
+        Sell
     }
 }

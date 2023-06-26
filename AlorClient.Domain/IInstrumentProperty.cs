@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common
+namespace AlorClient.Domain
 {
-    public interface IOffer
+    public interface IInstrumentProperty
     {
-        double Price { get; }
-        int Volume { get; }
+        Instrument Instrument { get; }
     }
 }

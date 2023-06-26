@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using AlorClient.Domain;
+using Common;
 
 namespace AlorClient
 {
@@ -7,7 +8,7 @@ namespace AlorClient
         Task<ISecurity> GetAsync(string symbol);
         IAsyncEnumerable<ISecurity> GetFuturesAsync(string symbol);
         IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol);
-        Task<IDeal?> GetLastDealAsync(ISecurity security);
-        IAsyncEnumerable<IDeal> GetDealsAsync(ISecurity security);
+        Task<Deal?> GetLastDealAsync(ISecurity security);
+        IAsyncEnumerable<Deal> GetDealsAsync(ISecurity security);
     }
 }

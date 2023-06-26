@@ -1,9 +1,10 @@
-﻿using Common;
+﻿using AlorClient.Domain;
+using Common;
 using System.Text.Json.Serialization;
 
 namespace AlorClient
 {
-    internal class Deal : IDeal
+    public class DealDto
     {
         [JsonPropertyName("id")]
         public long Id { get; set; }

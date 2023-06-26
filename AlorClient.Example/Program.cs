@@ -16,7 +16,6 @@ var host = Host.CreateDefaultBuilder(args)
             {
                 services
                 .AddAlorClient(config)
-                .AddData()
                 .AddScoped<SimpleSubscription>()
                 .AddScoped<SimpleEchoMessage>()
                 ;

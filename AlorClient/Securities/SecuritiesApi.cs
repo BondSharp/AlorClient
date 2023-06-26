@@ -49,43 +49,5 @@ namespace AlorClient
                 }
             }
         }
-
-        public async IAsyncEnumerable<DealDto> GetDealsAsync(string symbol, bool descending, int batchSize)
-        {
-            var path = $"{basePath}/MOEX/{symbol}/alltrades";
-
-            DateTimeOffset? from = null;
-            while (true)
-            {
-                var queryBuilder = new QueryBuilder()
-                {
-                    { "descending", descending.ToString() },
-                    { "includeVirtualTrades", "true" },
-                    { "exchange", "MOEX" },
-                    { "take" , batchSize.ToString()} ,
-                };
-                if (from.HasValue)
-                {
-                    queryBuilder.Add("from", from.Value.ToUnixTimeSeconds().ToString());
-                }
-
-                var deals = await alorApi.Get<DealDto[]>(path, queryBuilder);
-
-                foreach (var deal in deals)
-                {
-                    yield return deal;
-                }
-
-                if (deals.Length == 0)
-                {
-                    break;
-                }
-
-                from = descending
-                    ? deals.Min(deal => deal.Timestamp)
-                    : deals.Max(deal => deal.Timestamp);
-
-            }
-        }
     }
 }

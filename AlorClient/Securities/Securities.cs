@@ -27,26 +27,6 @@ namespace AlorClient
             return share;
         }
 
-        public async Task<Deal?> GetLastDealAsync(ISecurity security)
-        {
-            return await api.GetDealsAsync(security.Symbol, true, 1).Select(Map).FirstOrDefaultAsync();
-
-        }
-
-        public IAsyncEnumerable<Deal> GetDealsAsync(ISecurity security)
-        {
-            return api.GetDealsAsync(security.Symbol, true, 100).Select(Map);
-        }
-
-        private Deal Map(DealDto dealDto)
-        {
-            return new Deal()
-            {
-                Side = dealDto.Side,
-
-            };
-        }
-
         public async IAsyncEnumerable<ISecurity> GetOptionsAsync(string symbol)
         {
             await foreach (var option in api.GetSecurities("O", symbol))

@@ -3,7 +3,7 @@ using AlorClient.Domain;
 
 namespace AlorClient
 {
-    internal  class Security : ISecurity
+    internal  class SecurityDto 
     {
         public required string Symbol { get; set; }
 

@@ -4,8 +4,8 @@ namespace AlorClient
 {
     public interface ISecurities
     {
-        Task<ISecurity> GetAsync(string symbol);
-        Task<ISecurity[]> GetFuturesAsync(string symbol);
-        Task<ISecurity[]> GetOptionsAsync(string symbol);
+        Task<Instrument> GetAsync(string symbol);
+        Task<Instrument[]> GetFuturesAsync(string symbol);
+        Task<Instrument[]> GetOptionsAsync(string symbol);
     }
 }

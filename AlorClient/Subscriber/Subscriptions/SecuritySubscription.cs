@@ -6,17 +6,17 @@ namespace AlorClient
     public abstract class SecuritySubscription : Subscription
     {
         [JsonIgnore]
-        public ISecurity Security { get; }
+        public Instrument Instrument { get; }
 
         [JsonPropertyName("code")]
-        public string Code => Security.Symbol;
+        public string Code => Instrument.Symbol;
 
         [JsonPropertyName("exchange")]
-        public string Exchange => Security.Exchange;
+        public string Exchange => "MOEX";
 
-        protected SecuritySubscription(ISecurity security, string operationCode) : base(operationCode)
+        protected SecuritySubscription(Instrument instrument, string operationCode) : base(operationCode)
         {
-            Security = security;
+            Instrument = instrument;
         }
 
 

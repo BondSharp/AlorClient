@@ -13,14 +13,14 @@ namespace AlorClient
             this.alorApi = alorApi;
         }
 
-        public async Task<ISecurity> GetSecurity(string symbol)
+        public async Task<SecurityDto> GetSecurity(string symbol)
         {
-            var security = await alorApi.Get<Security>($"{basePath}/MOEX/{symbol}");
+            var security = await alorApi.Get<SecurityDto>($"{basePath}/MOEX/{symbol}");
 
             return security;
         }
 
-        public async Task<ISecurity[]> GetSecurities(string cficode, string query)
+        public async Task<SecurityDto[]> GetSecurities(string cficode, string query)
         {
 
             var queryBuilder = new QueryBuilder()
@@ -33,7 +33,7 @@ namespace AlorClient
                         { "offset" , "0"} ,
                     };
 
-            var securities = await alorApi.Get<Security[]>(basePath, queryBuilder);
+            var securities = await alorApi.Get<SecurityDto[]>(basePath, queryBuilder);
 
             return securities;
 

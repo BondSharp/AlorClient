@@ -27,7 +27,7 @@ namespace AlorClient.Example
         private void OnMessage(SecurityMessage securityMessage)
         {
             string? textMessage = null;
-            var symbol = securityMessage.SecuritySubscription.Security.Symbol;
+            var symbol = securityMessage.SecuritySubscription.Code;
 
             if (securityMessage is DealMessage dealMessage)
             {

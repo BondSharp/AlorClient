@@ -11,13 +11,13 @@ namespace AlorClient
         [JsonPropertyName("depth")]
         public int Depth { get; }
 
-        public DealsSubscription(ISecurity security, bool includeVirtualTrades, int depth) : base(security, "AllTradesGetAndSubscribe")
+        public DealsSubscription(Instrument instrument, bool includeVirtualTrades, int depth) : base(instrument, "AllTradesGetAndSubscribe")
         {
             IncludeVirtualTrades = includeVirtualTrades;
             Depth = depth;
         }
 
-        public DealsSubscription(ISecurity security) : this(security, false, 0)
+        public DealsSubscription(Instrument security) : this(security, false, 0)
         {
 
         }

@@ -13,22 +13,37 @@ namespace AlorClient
             api = securitiesApi;
         }
 
-        public Task<ISecurity[]> GetFuturesAsync(string symbol)
+        public async Task<Instrument[]> GetFuturesAsync(string symbol)
         {
+            var result = await api.GetSecurities("FF", symbol);
 
-            return api.GetSecurities("FF", symbol);
+            return result.Select(Map).ToArray();
 
         }
 
-        public async Task<ISecurity> GetAsync(string symbol)
+        public async Task<Instrument> GetAsync(string symbol)
         {
             var share = await api.GetSecurity(symbol);
-            return share;
+            return Map(share);
         }
 
-        public Task<ISecurity[]> GetOptionsAsync(string symbol)
+        public async Task<Instrument[]> GetOptionsAsync(string symbol)
         {
-            return api.GetSecurities("O", symbol);
+            var result = await api.GetSecurities("O", symbol);
+
+            return result.Select(Map).ToArray();
+        }
+
+
+        private Instrument Map(SecurityDto securityDto)
+        {
+            return new Instrument()
+            {
+                Symbol = securityDto.Symbol,
+                CfiCode = securityDto.CfiCode,
+                Shortname = securityDto.Shortname,
+                Cancellation = securityDto.Cancellation,
+            };
         }
 
 

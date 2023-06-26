@@ -1,4 +1,5 @@
 ﻿using AlorClient.Domain;
+using System.Linq;
 
 namespace AlorClient.Example
 {
@@ -20,19 +21,19 @@ namespace AlorClient.Example
             Subscribe(await future);
         }
 
-        public void Subscribe(ISecurity security)
+        public void Subscribe(Instrument instrument)
         {
-            subscriber.Subscribe(new OrderBookSubscription(security, 20));
-            subscriber.Subscribe(new DealsSubscription(security, true, 10));
+            subscriber.Subscribe(new OrderBookSubscription(instrument, 20));
+            subscriber.Subscribe(new DealsSubscription(instrument, true, 10));
         }
-        private async Task<ISecurity> GetShareAsync()
+        private async Task<Instrument> GetShareAsync()
         {
             var share = await securities.GetAsync("SBER");
 
             return share;
         }
 
-        private async Task<ISecurity> GetFutureAsync()
+        private async Task<Instrument> GetFutureAsync()
         {
             return (await securities.GetFuturesAsync("SP"))
                          .Where(x => x.Cancellation > DateTime.Now)

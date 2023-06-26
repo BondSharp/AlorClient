@@ -15,5 +15,7 @@ namespace AlorClient.Domain
         public required string Shortname { get; set; }
         public required string CfiCode { get; set; }
 
+        public DateTimeOffset Cancellation { get; set; }
+
     }
 }

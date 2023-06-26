@@ -8,7 +8,7 @@ namespace AlorClient
         [JsonPropertyName("depth")]
         public int Depth { get; }
 
-        public OrderBookSubscription(ISecurity security, int depth) : base(security, "OrderBookGetAndSubscribe")
+        public OrderBookSubscription(Instrument instrument, int depth) : base(instrument, "OrderBookGetAndSubscribe")
         {
             Depth = depth;
         }

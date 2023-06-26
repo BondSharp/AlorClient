@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Common;
+using AlorClient.Domain;
 
 namespace AlorClient
 {

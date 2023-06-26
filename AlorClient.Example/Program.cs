@@ -1,5 +1,5 @@
 ﻿using AlorClient;
-using Common;
+using AlorClient.Domain;
 using AlorClient.Example;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

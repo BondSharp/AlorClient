@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using AlorClient.Domain;
 
 namespace AlorClient.Example
 {

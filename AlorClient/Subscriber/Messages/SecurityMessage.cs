@@ -1,11 +1,10 @@
-﻿namespace AlorClient
-{
-    public abstract class SecurityMessage : Message
-    {
-        public SecuritySubscription SecuritySubscription { get; }
+﻿namespace AlorClient;
 
-        public SecurityMessage(SecuritySubscription securitySubscription) {
-            SecuritySubscription = securitySubscription;
-        } 
-    }
+public abstract class SecurityMessage : Message
+{
+    public SecuritySubscription SecuritySubscription { get; }
+
+    public SecurityMessage(SecuritySubscription securitySubscription) {
+        SecuritySubscription = securitySubscription;
+    } 
 }

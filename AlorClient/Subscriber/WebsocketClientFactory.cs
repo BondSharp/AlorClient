@@ -1,27 +1,26 @@
 ﻿using Websocket.Client;
 
-namespace AlorClient
+namespace AlorClient;
+
+internal class WebSocketClientFactory
 {
-    internal class WebsocketClientFactory
+    private const string developmentAddress = "wss://apidev.alor.ru/ws";
+    private const string productionAddress = "wss://api.alor.ru/ws";
+
+    private readonly Settings settings;
+
+    public WebSocketClientFactory(Settings settings)
     {
-        private const string DevelopmentAddress = "wss://apidev.alor.ru/ws";
-        private const string ProductionAddress = "wss://api.alor.ru/ws";
+        this.settings = settings;
+    }
 
-        private readonly Settings settings;
-
-        public WebsocketClientFactory(Settings settings)
-        {
-            this.settings = settings;
-        }
-
-        public IWebsocketClient Factory()
-        {
-            var uri = new Uri(settings.IsProduction ? ProductionAddress : DevelopmentAddress);
-            var websocketClient = new WebsocketClient(uri);
-            websocketClient.ReconnectTimeout = settings.ReconnectTimeout;
-            websocketClient.ErrorReconnectTimeout = settings.ErrorReconnectTimeout;
-            websocketClient.Start();
-            return websocketClient;
-        }
+    public IWebsocketClient Factory()
+    {
+        var uri = new Uri(settings.IsProduction ? productionAddress : developmentAddress);
+        var webSocketClient = new WebsocketClient(uri);
+        webSocketClient.ReconnectTimeout = settings.ReconnectTimeout;
+        webSocketClient.ErrorReconnectTimeout = settings.ErrorReconnectTimeout;
+        webSocketClient.Start();
+        return webSocketClient;
     }
 }

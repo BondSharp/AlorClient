@@ -1,17 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace AlorClient
+namespace AlorClient;
+
+internal sealed class UnSubscription : Subscription
 {
-    internal sealed class UnSubscription : Subscription
+    [JsonIgnore]
+    public Subscription Subscription { get; }
+
+    public UnSubscription(Subscription subscription) : base("unsubscribe", subscription.Guid)
     {
-        [JsonIgnore]
-        public Subscription Subscription { get; }
-
-        public UnSubscription(Subscription subscription) : base("unsubscribe", subscription.Guid)
-        {
-            Subscription = subscription;
-        }
-
-
+        Subscription = subscription;
     }
+
 }

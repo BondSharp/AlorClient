@@ -1,17 +1,16 @@
 ﻿
 using AlorClient.Domain;
 
-namespace AlorClient
-{
-    public class DealMessage : SecurityMessage
-    {
-        public DealsSubscription AllDealsSubscription { get; }
-        public DealDto Deal { get; }
+namespace AlorClient;
 
-        internal DealMessage(DealsSubscription allDealsSubscription, DealDto deal): base(allDealsSubscription)
-        {
-            AllDealsSubscription = allDealsSubscription;
-            Deal = deal;
-        }
+public class DealMessage : SecurityMessage
+{
+    public DealsSubscription AllDealsSubscription { get; }
+    public DealDto Deal { get; }
+
+    internal DealMessage(DealsSubscription allDealsSubscription, DealDto deal): base(allDealsSubscription)
+    {
+        AllDealsSubscription = allDealsSubscription;
+        Deal = deal;
     }
 }

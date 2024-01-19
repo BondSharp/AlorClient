@@ -2,60 +2,55 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
-namespace AlorClient
+namespace AlorClient;
+
+internal class AlorApi
 {
-    internal class AlorApi
+    private readonly TokenAuthorization tokenAuthorization;
+    private readonly bool isProduction;
+
+    private const string developmentAddress = "https://apidev.alor.ru";
+    private const string productionAddress = "https://api.alor.ru";
+
+    public AlorApi(TokenAuthorization tokenAuthorization, Settings settings)
     {
-        private readonly TokenAuthorization tokenAuthorization;
-        private readonly bool isProduction;
+        this.tokenAuthorization = tokenAuthorization;
+        isProduction = settings.IsProduction;
+    }
 
-        private const string DevelopmentAddress = "https://apidev.alor.ru";
-        private const string ProductionAddress = "https://api.alor.ru";
+    public async Task<T> Get<T>(string path) where T : class
+    {
+        return await Get<T>(path, new QueryBuilder());
+    }
+    public async Task<T> Get<T>(string path, QueryBuilder query) where T : class
+    {
+        using var client = CreateClient();
 
-        public AlorApi(TokenAuthorization tokenAuthorization, Settings settings)
+        var uri = GetUri(path, query);
+        var result = await client.GetFromJsonAsync<T>(uri);
+
+        return result!;
+    }
+
+    private Uri GetUri(string path, QueryBuilder queryBuilder)
+    {
+        using var client = CreateClient();
+
+        var uriBuilder = new UriBuilder(isProduction ? productionAddress : developmentAddress)
         {
-            this.tokenAuthorization = tokenAuthorization;
-            isProduction = settings.IsProduction;
-        }
+            Path = path,
+            Query = queryBuilder.ToString()
+        };
 
-        public async Task<T> Get<T>(string path) where T : class
-        {
-            return await Get<T>(path, new QueryBuilder());
-        }
-        public async Task<T> Get<T>(string path, QueryBuilder query) where T : class
-        {
-            using var client = CreateClient();
+        return uriBuilder.Uri;
+    }
 
-            var uri = GetUri(path, query);
-            var resut = await client.GetFromJsonAsync<T>(uri);
-            if (resut == null)
-            {
-                throw new NullReferenceException(nameof(resut));
-            }
+    private HttpClient CreateClient()
+    {
+        var client = new HttpClient();
+        var token = tokenAuthorization.Token();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
 
-            return resut;
-        }
-
-        private Uri GetUri(string path, QueryBuilder queryBuilder)
-        {
-            using var client = CreateClient();
-
-            var uriBuilder = new UriBuilder(isProduction ? ProductionAddress : DevelopmentAddress)
-            {
-                Path = path,
-                Query = queryBuilder.ToString()
-            };
-
-            return uriBuilder.Uri;
-        }
-
-        private HttpClient CreateClient()
-        {
-            var client = new HttpClient();
-            var token = tokenAuthorization.Token();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
-
-            return client;
-        }
+        return client;
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace AlorClient
+﻿namespace AlorClient;
+
+internal class Token
 {
-    internal class Token
-    {
-        public required string AccessToken { get; set; }
-        public DateTimeOffset Created { get; private set; } = DateTimeOffset.Now;
-    }
+    public required string AccessToken { get; set; }
+    public DateTimeOffset Created { get; private set; } = DateTimeOffset.Now;
 }

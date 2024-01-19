@@ -1,50 +1,49 @@
 ﻿
-namespace AlorClient
+namespace AlorClient;
+
+internal class Subscriber : ISubscriber, IDisposable
 {
-    internal class Subscriber : ISubscriber, IDisposable
+    private readonly SubscriptionSender subscriptionSender;
+    private readonly SubscriptionCollection subscriptionCollection;
+    private readonly IDisposable disposable;
+
+    public IDataProvider DataProvider { get; }
+
+
+    public Subscriber(SubscriptionSender subscriptionSender, SubscriptionCollection subscriptionCollection, DataProvider dataProvider)
     {
-        private readonly SubscriptionSender subscriptionSender;
-        private readonly SubscriptionCollection subscriptionCollection;
-        private readonly IDisposable disposable;
+        this.subscriptionSender = subscriptionSender;
+        this.subscriptionCollection = subscriptionCollection;
+        DataProvider = dataProvider;
+        disposable = dataProvider.Reconnects.Subscribe(OnRecontion);
+    }
 
-        public IDataProvider DataProvider { get; }
-
-
-        public Subscriber(SubscriptionSender subscriptionSender, SubscriptionCollection subscriptionCollection, DataProvider dataProvider)
+    public void Subscribe(Subscription subscription)
+    {
+        if (subscriptionCollection.Add(subscription))
         {
-            this.subscriptionSender = subscriptionSender;
-            this.subscriptionCollection = subscriptionCollection;
-            DataProvider = dataProvider;
-            disposable = dataProvider.Reconnects.Subscribe(OnRecontion);
-        }
+            subscriptionSender.Send(subscription);
+        };
+    }
 
-        public void Subscribe(Subscription subscription)
+    public void UnSubscribe(Subscription subscription)
+    {
+        if (subscriptionCollection.Remove(subscription))
         {
-            if (subscriptionCollection.Add(subscription))
-            {
-                subscriptionSender.Send(subscription);
-            };
+            subscriptionSender.Send(new UnSubscription(subscription));
         }
+    }
 
-        public void UnSubscribe(Subscription subscription)
+    private void OnRecontion(Reconnect reconnect)
+    {
+        foreach (var subscription in subscriptionCollection.subscriptions)
         {
-            if (subscriptionCollection.Remove(subscription))
-            {
-                subscriptionSender.Send(new UnSubscription(subscription));
-            }
+            subscriptionSender.Send(subscription);
         }
+    }
 
-        private void OnRecontion(Reconnect reconnect)
-        {
-            foreach (var subscription in subscriptionCollection.subscriptions)
-            {
-                subscriptionSender.Send(subscription);
-            }
-        }
-
-        public void Dispose()
-        {
-            disposable?.Dispose();
-        }
+    public void Dispose()
+    {
+        disposable?.Dispose();
     }
 }

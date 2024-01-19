@@ -1,20 +1,19 @@
 ﻿using System.Text.Json.Serialization;
 using AlorClient.Domain;
 
-namespace AlorClient
+namespace AlorClient;
+
+internal  class SecurityDto 
 {
-    internal  class SecurityDto 
-    {
-        public required string Symbol { get; set; }
+    public required string Symbol { get; set; }
 
-        public required string Shortname { get; set; }
+    public required string ShortName { get; set; }
 
-        public required string Exchange { get; set; }
+    public required string Exchange { get; set; }
 
-        public required string CfiCode { get; set; }
+    public required string CfiCode { get; set; }
 
-        public required string Board { get; set; }
+    public required string Board { get; set; }
 
-        public DateTime Cancellation { get; set; }
-    }
+    public DateTime Cancellation { get; set; }
 }

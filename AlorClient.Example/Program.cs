@@ -1,6 +1,5 @@
 ﻿using AlorClient;
 using AlorClient.Domain;
-using AlorClient.Example;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,16 +15,16 @@ var host = Host.CreateDefaultBuilder(args)
             {
                 services
                 .AddAlorClient(config)
-                .AddScoped<SimpleSubscription>()
-                .AddScoped<SimpleEchoMessage>()
                 ;
             }).Build();
 host.Start();
 
-var simpleSubscription = host.Services.GetRequiredService<SimpleSubscription>();
-var simpleEchoMessage = host.Services.GetRequiredService<SimpleEchoMessage>();
+var securities =  host.Services.GetRequiredService<ISecurities>();
+var stocks = await securities.GetSharesAsync();
+var sber = stocks.First(x => x.Symbol == "SBER");
 
-simpleEchoMessage.Echo();
-simpleSubscription.Subscribe();
+var subscriptions = host.Services.GetRequiredService<ISubscriptions>();
+
+subscriptions.CreateMessages(new RequestMessages(sber)).Subscribe(Console.WriteLine);
 
 host.WaitForShutdown();

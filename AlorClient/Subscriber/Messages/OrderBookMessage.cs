@@ -2,11 +2,14 @@
 
 public class OrderBookMessage : SecurityMessage
 {
-    public OrderBookSubscription OrderBookSubscription { get; }
-    public OrderBookDto OrderBook { get; }
-    public OrderBookMessage(OrderBookSubscription OrderBookSubscription, OrderBookDto orderBook) : base(OrderBookSubscription)
+    public OrderBook OrderBook { get; }
+    public OrderBookMessage(Security security, OrderBook orderBook) : base(security)
     {
-        this.OrderBookSubscription = OrderBookSubscription;
         OrderBook = orderBook;
+    }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()} {OrderBook}";
     }
 }

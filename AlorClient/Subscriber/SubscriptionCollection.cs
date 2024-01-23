@@ -3,35 +3,29 @@ namespace AlorClient;
 
 internal class SubscriptionCollection
 {
-    public readonly Dictionary<Guid, Subscription> cache;
-    public readonly HashSet<Subscription> subscriptions;
+    private readonly Dictionary<Guid, Subscription> subscriptions;
 
     public SubscriptionCollection()
     {
-        cache = new Dictionary<Guid, Subscription>();
-        subscriptions = new HashSet<Subscription>();
+        subscriptions = new Dictionary<Guid, Subscription>();
     }
 
     public Subscription GetSubscription(Guid guid)
     {
-        return cache[guid];
+        return subscriptions[guid];
     }
 
-    public Subscription[] GetSubscriptions() => subscriptions.ToArray();
+    public Subscription[] GetSubscriptions() => subscriptions.Values.ToArray();
 
     public bool Add(Subscription subscription)
     {
-        if (!cache.ContainsKey(subscription.Guid))
+        if (!this.subscriptions.ContainsKey(subscription.Guid))
         {
-            cache.Add(subscription.Guid, subscription);
+            this.subscriptions.Add(subscription.Guid, subscription);
+            return true;
         }
-        
-        return subscriptions.Add(subscription);
+
+        return false;
               
     }
-
-    public bool Remove(Subscription subscription)
-    {
-        return subscriptions.Remove(subscription);
-    }      
 }

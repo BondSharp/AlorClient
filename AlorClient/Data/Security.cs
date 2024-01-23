@@ -1,9 +1,8 @@
 ﻿using System.Text.Json.Serialization;
-using AlorClient.Domain;
 
 namespace AlorClient;
 
-internal  class SecurityDto 
+public class Security
 {
     public required string Symbol { get; set; }
 
@@ -16,4 +15,9 @@ internal  class SecurityDto
     public required string Board { get; set; }
 
     public DateTime Cancellation { get; set; }
+
+    public override string ToString()
+    {
+        return Symbol;
+    }
 }

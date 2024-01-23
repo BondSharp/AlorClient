@@ -15,32 +15,31 @@ public static class Extentoions
 
         return serviceCollection
             .AddSingleton(settings)
-            .AddSingleton<AlorApi>()
             .AddSingleton<TokenAuthorization>()
             .AddHostedService<UpdatingToken>()
-            .AddSecurities()
+            .AddRest()
             .AddSubscriber();
     }
 
-    private static IServiceCollection AddSecurities(this IServiceCollection serviceCollection)
+    private static IServiceCollection AddRest(this IServiceCollection serviceCollection)
     {
         return serviceCollection
-            .AddSingleton<ISecurities, Securities>()
-            .AddSingleton<SecuritiesApi>();
+            .AddSingleton<AlorApi>()
+            .AddSingleton<ISecurities, Securities>();
     }
 
     private static IServiceCollection AddSubscriber(this IServiceCollection serviceCollection)
     {
         return serviceCollection
             .AddSingleton<WebSocketClientFactory>()
+             .AddSingleton<ISubscriptions,Subscriptions>()
             .AddScoped<SubscriptionSender>()
             .AddScoped<SubscriptionCollection>()
-            .AddScoped<ISubscriber, Subscriber>()
+            .AddScoped<Subscriber>()
             .AddScoped(GetWebsocketClient)
             .AddScoped<ReconnectProvider>()
             .AddScoped<MessageProvider>()
-            .AddScoped<MessageProvider>()
-            .AddScoped<DataProvider>();
+            .AddScoped<MessageProvider>();
     }
 
     private static IWebsocketClient GetWebsocketClient(IServiceProvider serviceProvider) => serviceProvider.GetRequiredService<WebSocketClientFactory>().Factory();

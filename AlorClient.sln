@@ -9,11 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlorClient", "AlorClient\Al
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C0CE97A1-80A5-4C76-8D60-006D683B3152}"
 	ProjectSection(SolutionItems) = preProject
-		Monitoring.service = Monitoring.service
 		Readme.md = Readme.md
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlorClient.Domain", "AlorClient.Domain\AlorClient.Domain.csproj", "{3912A009-F7A3-4A61-A34E-955BD5830358}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +26,6 @@ Global
 		{8FA184AC-5067-47E8-8D8F-B02C369D6E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FA184AC-5067-47E8-8D8F-B02C369D6E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FA184AC-5067-47E8-8D8F-B02C369D6E55}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3912A009-F7A3-4A61-A34E-955BD5830358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3912A009-F7A3-4A61-A34E-955BD5830358}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3912A009-F7A3-4A61-A34E-955BD5830358}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3912A009-F7A3-4A61-A34E-955BD5830358}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

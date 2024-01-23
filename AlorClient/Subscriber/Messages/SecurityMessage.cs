@@ -2,9 +2,14 @@
 
 public abstract class SecurityMessage : Message
 {
-    public SecuritySubscription SecuritySubscription { get; }
+    public Security Security { get; }
 
-    public SecurityMessage(SecuritySubscription securitySubscription) {
-        SecuritySubscription = securitySubscription;
-    } 
+    public SecurityMessage(Security security) {
+        Security = security;
+    }
+
+    public override string ToString()
+    {
+        return Security.ToString();
+    }
 }

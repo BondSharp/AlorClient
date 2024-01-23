@@ -5,12 +5,15 @@ namespace AlorClient;
 
 public class DealMessage : SecurityMessage
 {
-    public DealsSubscription AllDealsSubscription { get; }
-    public DealDto Deal { get; }
+    public Deal Deal { get; }
 
-    internal DealMessage(DealsSubscription allDealsSubscription, DealDto deal): base(allDealsSubscription)
+    internal DealMessage(Security security, Deal deal): base(security)
     {
-        AllDealsSubscription = allDealsSubscription;
         Deal = deal;
+    }
+
+    public override string ToString()
+    {
+        return $"{base.ToString()} {Deal}";
     }
 }

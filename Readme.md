@@ -9,12 +9,7 @@
 	"ReconnectTimeout" : "0:01:00",
 	"ErrorReconnectTimeout" : "0:01:00",
 	"RefreshingTokenTimeout" : "0:10:00"
-  },
-  "Monitoring" : {
-	"Symbols" : ["SBER"],
-	"Futures" : ["SR"],
-	"Options" : ["SR"]
-  }		
+  }	
 }
 ```
 

@@ -3,22 +3,16 @@ using AlorClient.Domain;
 
 namespace AlorClient;
 
-public sealed class DealsSubscription : SecuritySubscription
+internal sealed class DealsSubscription : SecuritySubscription
 {
     [JsonPropertyName("includeVirtualTrades")]
-    public bool IncludeVirtualTrades { get; }
+    public bool IncludeVirtualTrades { get; } = false;
 
     [JsonPropertyName("depth")]
     public int Depth { get; }
 
-    public DealsSubscription(Instrument instrument, bool includeVirtualTrades, int depth) : base(instrument, "AllTradesGetAndSubscribe")
+    public DealsSubscription(Security instrument, int depth,int frequency) : base(instrument, "AllTradesGetAndSubscribe", frequency)
     {
-        IncludeVirtualTrades = includeVirtualTrades;
         Depth = depth;
-    }
-
-    public DealsSubscription(Instrument security) : this(security, false, 0)
-    {
-
     }
 }

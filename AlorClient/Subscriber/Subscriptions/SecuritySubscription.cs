@@ -3,20 +3,24 @@ using AlorClient.Domain;
 
 namespace AlorClient;
 
-public abstract class SecuritySubscription : Subscription
+internal abstract class SecuritySubscription : Subscription
 {
     [JsonIgnore]
-    public Instrument Instrument { get; }
+    public Security Security { get; }
 
     [JsonPropertyName("code")]
-    public string Code => Instrument.Symbol;
+    public string Code => Security.Symbol;
 
     [JsonPropertyName("exchange")]
     public string Exchange => "MOEX";
 
-    protected SecuritySubscription(Instrument instrument, string operationCode) : base(operationCode)
+    [JsonPropertyName("frequency")]
+    public int Frequency { get; }
+
+    protected SecuritySubscription(Security instrument, string operationCode,int frequency) : base(operationCode)
     {
-        Instrument = instrument;
+        Security = instrument;
+        Frequency = frequency;
     }
 
 

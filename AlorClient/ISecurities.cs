@@ -1,10 +1,13 @@
-﻿using AlorClient.Domain;
+﻿using AlorClient.Data;
+using AlorClient.Domain;
 
 namespace AlorClient;
 
 public interface ISecurities
 {
-    Task<Instrument> GetAsync(string symbol);
-    Task<Instrument[]> GetFuturesAsync(string symbol);
-    Task<Instrument[]> GetOptionsAsync(string symbol);
+    Task<Security[]> GetSharesAsync();
+
+    Task<Security[]> GetFuturesAsync();
+
+    Task<Option[]> GetOptionsAsync(Security security);
 }

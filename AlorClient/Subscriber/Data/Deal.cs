@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace AlorClient;
 
-public class DealDto
+public class Deal
 {
     [JsonPropertyName("id")]
     public long Id { get; set; }
@@ -28,4 +28,11 @@ public class DealDto
     [JsonConverter(typeof(TimestampJsonConverter))]
     public DateTimeOffset Timestamp { get; set; }
     public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.Now;
+
+
+    public override string ToString()
+    {
+        return $"{Price} {Quantity}";
+    }
+
 }

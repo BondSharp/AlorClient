@@ -2,7 +2,7 @@
 
 namespace AlorClient;
 
-public abstract class Subscription
+internal abstract class Subscription
 {
     [JsonPropertyName("opcode")]
     public string OperationCode { get; }

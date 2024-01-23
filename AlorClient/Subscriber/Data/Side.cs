@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AlorClient.Domain
+namespace AlorClient.Domain;
+
+public enum Side
 {
-    public enum Side
-    {
-        Buy,
-        Sell
-    }
+    Buy,
+    Sell
 }

@@ -17,6 +17,7 @@ internal class MessageProvider : IObservable<Message>
     }
 
     public IDisposable Subscribe(IObserver<Message> observer)
+
     {
         return client.MessageReceived
             .Where(x => x.Text.StartsWith("{ \"data"))
@@ -56,14 +57,14 @@ internal class MessageProvider : IObservable<Message>
     {
         if (subscription is OrderBookSubscription bookSubscription)
         {
-            var orderBook = Deserialize<OrderBookDto>(data);
-            return new OrderBookMessage(bookSubscription, orderBook);
+            var orderBook = Deserialize<OrderBook>(data);
+            return new OrderBookMessage(bookSubscription.Security, orderBook);
         }
 
         if (subscription is DealsSubscription allDealsSubscription)
         {
-            var deal = Deserialize<DealDto>(data);
-            return new DealMessage(allDealsSubscription, deal);
+            var deal = Deserialize<Deal>(data);
+            return new DealMessage(allDealsSubscription.Security, deal);
         }
 
         throw new ArgumentException(nameof(subscription));

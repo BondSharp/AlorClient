@@ -3,12 +3,12 @@ using AlorClient.Domain;
 
 namespace AlorClient;
 
-public sealed class OrderBookSubscription : SecuritySubscription
+internal sealed class OrderBookSubscription : SecuritySubscription
 {
     [JsonPropertyName("depth")]
     public int Depth { get; }
 
-    public OrderBookSubscription(Instrument instrument, int depth) : base(instrument, "OrderBookGetAndSubscribe")
+    public OrderBookSubscription(Security instrument, int depth, int frequency) : base(instrument, "OrderBookGetAndSubscribe", frequency)
     {
         Depth = depth;
     }

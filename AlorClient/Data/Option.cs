@@ -5,11 +5,10 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace AlorClient.Data;
-public class Option : Security
+namespace AlorClient;
+public class Option : Derivative
 {
     public double StrikePrice { get; set; }
-    public string UnderlyingSymbol { get; set; }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public OptionSide OptionSide { get; set; }

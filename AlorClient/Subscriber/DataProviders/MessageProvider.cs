@@ -5,7 +5,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace AlorClient.Service.WebSocket.DataProviders;
 
-internal class MessageProvider : IObservable<Message>
+internal class MessageProvider : IObservable<SecurityMessage>
 {
     private readonly SubscriptionCollection subscriptionCollection;
     private readonly IWebsocketClient client;
@@ -16,12 +16,12 @@ internal class MessageProvider : IObservable<Message>
         this.client = client;
     }
 
-    public IDisposable Subscribe(IObserver<Message> observer)
+    public IDisposable Subscribe(IObserver<SecurityMessage> observer)
 
     {
         return client.MessageReceived
-            .Where(x => x.Text.StartsWith("{ \"data"))
             .Select(Parse)
+            .OfType<SecurityMessage>()
             .Subscribe(observer);
     }
 
@@ -29,11 +29,17 @@ internal class MessageProvider : IObservable<Message>
     {
         if (responseMessage.Text.StartsWith("{ \"data"))
         {
+            ParseMessage(responseMessage);
             return ParseMessage(responseMessage);
         }
         if (responseMessage.Text.StartsWith("{\"requestGuid"))
         {
-            return ParseNotification(responseMessage);
+            var notification = ParseNotification(responseMessage);
+            if (notification.Code != 200)
+            {
+                throw new Exception(notification.ToString());
+            }
+            return notification;
         }
 
         throw new ArgumentException(nameof(responseMessage));

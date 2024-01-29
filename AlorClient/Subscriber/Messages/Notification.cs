@@ -15,6 +15,6 @@ internal class Notification : Message
 
     public override string ToString()
     {
-        return $"Code : {Code}, Message: {Message} Guid {Subscription.Guid}";
+        return $"Code : {Code}, Message: {Message}";
     }
 }

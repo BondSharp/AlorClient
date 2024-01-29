@@ -19,12 +19,18 @@ var host = Host.CreateDefaultBuilder(args)
             }).Build();
 host.Start();
 
+
 var securities =  host.Services.GetRequiredService<ISecurities>();
-var stocks = await securities.GetSharesAsync();
-var sber = stocks.First(x => x.Symbol == "SBER");
+var instruments = await securities.GetSecurities(TimeSpan.FromDays(1)).ToArrayAsync();
 
-var subscriptions = host.Services.GetRequiredService<ISubscriptions>();
+var sber = instruments.OfType<Share>().First(x => x.Symbol == "SBER");
 
-subscriptions.CreateMessages(new RequestMessages(sber)).Subscribe(Console.WriteLine);
+host.Services.GetRequiredService<IMarkerDataBuilder>()
+    .OnOrderBook(sber,20,0)
+    .OnDeals(sber,20,0)
+    .Build()
+    .Subscribe(message=>Console.WriteLine(message), exception=> Console.WriteLine(exception.Message));
+
+
 
 host.WaitForShutdown();

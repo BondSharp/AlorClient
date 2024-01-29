@@ -1,6 +1,6 @@
 ﻿
 
-namespace AlorClient.Data;
+namespace AlorClient;
 public enum OptionSide
 {
     Call,

@@ -32,7 +32,7 @@ public static class Extentoions
     {
         return serviceCollection
             .AddSingleton<WebSocketClientFactory>()
-             .AddSingleton<ISubscriptions,Subscriptions>()
+             .AddTransient<IMarkerDataBuilder, MarkerDataBuilder>()
             .AddScoped<SubscriptionSender>()
             .AddScoped<SubscriptionCollection>()
             .AddScoped<Subscriber>()

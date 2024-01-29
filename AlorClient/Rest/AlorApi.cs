@@ -32,6 +32,18 @@ internal class AlorApi
         return result!;
     }
 
+    public async Task Download(string path, string file, QueryBuilder query)
+    {
+        using var client = CreateClient();
+
+        var uri = GetUri(path, query);
+        using var result = await client.GetStreamAsync(uri);
+
+        using var fileStream = new FileStream(file, FileMode.Truncate, FileAccess.Write);
+        await result.CopyToAsync(fileStream);
+
+    }
+
     private Uri GetUri(string path, QueryBuilder queryBuilder)
     {
         using var client = CreateClient();

@@ -12,6 +12,8 @@ public class Security
 
     public required string Board { get; set; }
 
+    public required string Exchange { get; set; }
+
     public override string ToString()
     {
         return Symbol;

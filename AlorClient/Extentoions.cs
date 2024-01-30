@@ -25,7 +25,8 @@ public static class Extentoions
     {
         return serviceCollection
             .AddSingleton<AlorApi>()
-            .AddSingleton<ISecurities, Securities>();
+            .AddSingleton<ISecurities, Securities>()
+              .AddSingleton<IDeals, Deals>();
     }
 
     private static IServiceCollection AddSubscriber(this IServiceCollection serviceCollection)

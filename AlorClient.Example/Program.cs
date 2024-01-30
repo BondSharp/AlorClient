@@ -25,6 +25,9 @@ var instruments = await securities.GetSecurities(TimeSpan.FromDays(1)).ToArrayAs
 
 var sber = instruments.OfType<Share>().First(x => x.Symbol == "SBER");
 
+var deals = host.Services.GetRequiredService<IDeals>();
+
+
 host.Services.GetRequiredService<IMarkerDataBuilder>()
     .OnOrderBook(sber,20,0)
     .OnDeals(sber,20,0)

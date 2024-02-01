@@ -21,6 +21,7 @@ host.Start();
 
 
 var securities =  host.Services.GetRequiredService<ISecurities>();
+var deals = host.Services.GetRequiredService<IDeals>();
 var instruments = await securities.GetSecurities(TimeSpan.FromDays(1)).ToArrayAsync();
 
 var sber = instruments.OfType<Share>().First(x => x.Symbol == "SBER");
@@ -33,4 +34,4 @@ host.Services.GetRequiredService<IMarkerDataBuilder>()
 
 
 
-host.WaitForShutdown();
+await host.WaitForShutdownAsync();

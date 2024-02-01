@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AlorClient;
-public class Option : Derivative
+public class Option : Security
 {
     public double StrikePrice { get; set; }
 
@@ -16,4 +16,6 @@ public class Option : Derivative
     public double TheorPrice { get; set; }
     public double TheorPriceLimit { get; set; }
     public double Volatility { get; set; }
+
+    public required string UnderlyingSymbol { get; set; }
 }

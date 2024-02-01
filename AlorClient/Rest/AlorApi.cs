@@ -27,6 +27,7 @@ internal class AlorApi
         using var client = CreateClient();
 
         var uri = GetUri(path, query);
+        Console.WriteLine(uri);
         var result = await client.GetFromJsonAsync<T>(uri);
 
         return result!;
@@ -38,10 +39,28 @@ internal class AlorApi
 
         var uri = GetUri(path, query);
         using var result = await client.GetStreamAsync(uri);
-
-        using var fileStream = new FileStream(file, FileMode.Truncate, FileAccess.Write);
+        File.Delete(file);
+        using var fileStream = new FileStream(file, FileMode.Create, FileAccess.Write);
         await result.CopyToAsync(fileStream);
 
+    }
+
+    public async IAsyncEnumerable<T> Pagination<T>(string path,int  offset, int batch, QueryBuilder query, Func<T,int> count) where T : class
+    {
+        
+        while (true)
+        {
+            var queryBuilder = new QueryBuilder(query);
+            queryBuilder.Add("offset",offset.ToString());
+            queryBuilder.Add("limit", batch.ToString());
+            var result = await Get<T>(path,queryBuilder);
+            yield return result;
+            if (count(result) < batch)
+            {
+                break;
+            }
+            offset += batch;            
+        }
     }
 
     private Uri GetUri(string path, QueryBuilder queryBuilder)

@@ -10,36 +10,33 @@ internal class Deals : IDeals
         this.alorApi = alorApi;
     }
 
-    public async IAsyncEnumerable<Deal> GetAllDeal(Security security, int batch, Deal? @continue)
+    public IAsyncEnumerable<Deal> GetAllDeals(Security security, int batch, Deal? @continue)
     {
+        var path = $"/md/v2/Securities/{security.Exchange}/{security.Symbol}/alltrades";
+
         var offset = 0;
-        var @params = new Dictionary<string, string>(3)
-        {
-            ["take"] = batch.ToString()
-        };
+        var @params = new QueryBuilder();
         if (@continue != null)
         {
             @params.Add("fromId", @continue.Id.ToString());
             offset = 1;
         }
 
-        while (true)
-        {                     
-            @params.Add("offset", offset.ToString());         
+        return alorApi.Pagination<Deal[]>(path, offset, batch, @params,x=>x.Length)                
+                .SelectMany(x => x.ToAsyncEnumerable());                
+    }
 
-            var deals = await alorApi.Get<Deal[]>($"/md/v2/Securities/{security.Exchange}/{security.Symbol}/alltrades", new QueryBuilder(@params));
+    public  IAsyncEnumerable<Deal> GetHistoryDeals(Security security, int batch, DateTimeOffset? dateTime)
+    {
+        var path = $"/md/v2/Securities/{security.Exchange}/{security.Symbol}/alltrades/history";
+        var query = new QueryBuilder();
+        if (dateTime.HasValue)
+        {
+            query.Add("from", dateTime.Value.ToUnixTimeSeconds().ToString());
+        }
 
-            foreach (var deal in deals)
-            {
-                yield return deal;
-            }
-
-            if (deals.Length != batch)
-            {
-                break;
-            }
-            offset += batch;
-        };
-
+        return alorApi
+            .Pagination<ListDeal>(path, 0, batch, query, list => list.List.Length)
+            .SelectMany(x=>x.List.ToAsyncEnumerable());
     }
 }

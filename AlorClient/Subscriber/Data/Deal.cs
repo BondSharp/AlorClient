@@ -27,8 +27,6 @@ public class Deal
     [JsonPropertyName("timestamp")]
     [JsonConverter(typeof(TimestampJsonConverter))]
     public DateTimeOffset Timestamp { get; set; }
-    public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.Now;
-
 
     public override string ToString()
     {

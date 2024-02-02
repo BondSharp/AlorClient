@@ -1,4 +1,6 @@
-﻿namespace AlorClient;
+﻿using System.ComponentModel;
+
+namespace AlorClient;
 
 public sealed class Settings
 {

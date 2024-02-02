@@ -18,7 +18,6 @@ public class OrderBook
 
     [JsonPropertyName("existing")]
     public bool Existing { get; set; }
-    public DateTimeOffset ClientTimestamp { get; set; } = DateTimeOffset.UtcNow;
 
     public override string ToString()
     {

@@ -17,16 +17,18 @@ public static class Extentoions
             .AddSingleton(settings)
             .AddSingleton<TokenAuthorization>()
             .AddHostedService<UpdatingToken>()
+            .AddSingleton<IAlorClient,AlorClient>()
             .AddRest()
             .AddSubscriber();
     }
+
 
     private static IServiceCollection AddRest(this IServiceCollection serviceCollection)
     {
         return serviceCollection
             .AddSingleton<AlorApi>()
-            .AddSingleton<ISecurities, Securities>()
-              .AddSingleton<IDeals, Deals>();
+            .AddSingleton<Securities>()
+            .AddSingleton<Deals>();
     }
 
     private static IServiceCollection AddSubscriber(this IServiceCollection serviceCollection)

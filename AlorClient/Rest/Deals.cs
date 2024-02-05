@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 
 namespace AlorClient;
-internal class Deals : IDeals
+internal class Deals
 {
     private readonly AlorApi alorApi;
 

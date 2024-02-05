@@ -3,25 +3,23 @@ using System.Text.Json;
 using Websocket.Client;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace AlorClient.Service.WebSocket.DataProviders;
+namespace AlorClient;
 
-internal class MessageProvider : IObservable<SecurityMessage>
+internal class MarkerDataProvider : IObservable<Message>
 {
     private readonly SubscriptionCollection subscriptionCollection;
     private readonly IWebsocketClient client;
 
-    public MessageProvider(SubscriptionCollection SubscriptionCollection, IWebsocketClient client)
+    public MarkerDataProvider(SubscriptionCollection SubscriptionCollection, IWebsocketClient client)
     {
         subscriptionCollection = SubscriptionCollection;
         this.client = client;
     }
 
-    public IDisposable Subscribe(IObserver<SecurityMessage> observer)
-
+    public IDisposable Subscribe(IObserver<Message> observer)
     {
         return client.MessageReceived
-            .Select(Parse)
-            .OfType<SecurityMessage>()
+            .Select(Parse)            
             .Subscribe(observer);
     }
 
@@ -35,10 +33,6 @@ internal class MessageProvider : IObservable<SecurityMessage>
         if (responseMessage.Text.StartsWith("{\"requestGuid"))
         {
             var notification = ParseNotification(responseMessage);
-            if (notification.Code != 200)
-            {
-                throw new Exception(notification.ToString());
-            }
             return notification;
         }
 

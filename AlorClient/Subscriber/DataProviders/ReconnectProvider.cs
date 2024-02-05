@@ -16,8 +16,7 @@ internal class ReconnectProvider : IObservable<Reconnect>
     {
         return client
             .ReconnectionHappened
-            .Where(reconnectionInfo => reconnectionInfo.Type != ReconnectionType.Initial)
-            .Select(_ => new Reconnect())
+            .Select(x => new Reconnect(x))
             .Subscribe(observer);
     }
 }

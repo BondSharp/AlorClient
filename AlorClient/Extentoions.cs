@@ -1,5 +1,4 @@
-﻿using AlorClient.Service.WebSocket.DataProviders;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Websocket.Client;
 
@@ -41,8 +40,7 @@ public static class Extentoions
             .AddScoped<Subscriber>()
             .AddScoped(GetWebsocketClient)
             .AddScoped<ReconnectProvider>()
-            .AddScoped<MessageProvider>()
-            .AddScoped<MessageProvider>();
+            .AddScoped<MarkerDataProvider>();
     }
 
     private static IWebsocketClient GetWebsocketClient(IServiceProvider serviceProvider) => serviceProvider.GetRequiredService<WebSocketClientFactory>().Factory();

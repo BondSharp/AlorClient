@@ -6,7 +6,7 @@ using AlorClient.Data;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace AlorClient;
-internal class Securities : ISecurities
+internal class Securities
 {
     private readonly AlorApi alorApi;
 
